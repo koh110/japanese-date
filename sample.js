@@ -8,3 +8,7 @@ console.log(date);
 date = jpdate.getDate('来年の昨日');
 // eslint-disable-next-line no-console
 console.log(date);
+
+const match = jpdate.match('来年の昨日');
+// eslint-disable-next-line no-console
+console.log(match);
