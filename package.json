@@ -1,0 +1,21 @@
+{
+  "name": "japanese-date",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_PATH=. ava -v",
+    "test:util": "NODE_PATH=. ava -v test/util",
+    "lint": "eslint ./"
+  },
+  "author": "koh110",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "eslint": "^3.9.1",
+    "sinon": "^1.17.6"
+  },
+  "dependencies": {
+    "moment": "^2.15.1"
+  }
+}
