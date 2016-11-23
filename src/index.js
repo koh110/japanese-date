@@ -2,20 +2,12 @@
 
 const moment = require('moment');
 
+const timeReplacer = require('./time').replacer;
 const dateReplacer = require('./date').replacer;
 const yearReplacer = require('./year').replacer;
-const addPatterns = [].concat(dateReplacer.patterns).concat(yearReplacer.patterns);
+const addPatterns = [...timeReplacer.patterns, ...dateReplacer.patterns, ...yearReplacer.patterns];
 const pattern = new RegExp(addPatterns.join('|'), 'g');
-const patternMap = new Map();
-
-for (const entry of dateReplacer.map.entries()) {
-  entry[1].type = 'days';
-  patternMap.set(entry[0], entry[1]);
-}
-for (const entry of yearReplacer.map.entries()) {
-  entry[1].type = 'years';
-  patternMap.set(entry[0], entry[1]);
-}
+const patternMap = new Map([...timeReplacer.map, ...dateReplacer.map, ...yearReplacer.map]);
 
 const match = (str = '', now = Date.now()) => {
   let result;
@@ -44,7 +36,8 @@ const getDate = (str = '', now = Date.now()) => {
   const res = [];
   const tmp = {
     years: null,
-    days: null
+    days: null,
+    seconds: null
   };
   const pushRes = () => {
     const date = moment(now);
@@ -54,24 +47,33 @@ const getDate = (str = '', now = Date.now()) => {
     if (tmp.days) {
       date.add(tmp.days.relative, 'days');
     }
+    if (tmp.seconds) {
+      date.add(tmp.seconds.relative, 'seconds');
+    }
     res.push(date.toDate());
     tmp.years = null;
     tmp.days = null;
+    tmp.seconds = null;
   };
   for (const elem of results) {
     if (elem.type === 'years') {
-      if (tmp.years || tmp.days) {
+      if (tmp.years || tmp.days || tmp.seconds) {
         pushRes();
       }
       tmp.years = elem;
     } else if (elem.type === 'days') {
-      if (tmp.days) {
+      if (tmp.days || tmp.seconds) {
         pushRes();
       }
       tmp.days = elem;
+    } else if (elem.type === 'seconds') {
+      if (tmp.seconds) {
+        pushRes();
+      }
+      tmp.seconds = elem;
     }
   }
-  if (tmp.years || tmp.days) {
+  if (tmp.years || tmp.days || tmp.seconds) {
     pushRes();
   }
   return res;

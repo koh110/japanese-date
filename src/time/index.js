@@ -5,7 +5,7 @@ const kansuuji = util.kansuujiRegExp.toString();
 const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
 
 const replacer = [{
-  pattern: `(${kansuujiPattern}|[0-9０-９]+)日(後|ご|まえ|前)`,
+  pattern: `(${kansuujiPattern}|[0-9０-９]+)(秒|分|時間)(後|ご|まえ|前)`,
   getRelative: (inputStr) => {
     let num = null;
     if (util.kansuujiRegExp.test(inputStr)) {
@@ -15,40 +15,16 @@ const replacer = [{
       const parse = inputStr.match(/[0-9]+/);
       num = parseInt(parse[0], 10);
     }
+    const unit = inputStr.match(/秒|分|時間/);
+    if (unit[0] === '分') {
+      num = num * 60;
+    } else if (unit[0] === '時間') {
+      num = num * 3600;
+    }
     if (/(まえ|前)/.test(inputStr)) {
       num = num * (-1);
     }
     return num;
-  }
-}, {
-  pattern: '今日|きょう',
-  getRelative: (inputStr) => {
-    return 0;
-  }
-}, {
-  pattern: '明日|あした|あす|みょうじつ|翌日|よくじつ',
-  getRelative: (inputStr) => {
-    return 1;
-  }
-}, {
-  pattern: '明々後日|しあさって',
-  getRelative: (inputStr) => {
-    return 3;
-  }
-}, {
-  pattern: '明後日|あさって',
-  getRelative: (inputStr) => {
-    return 2;
-  }
-}, {
-  pattern: '一昨日|おととい',
-  getRelative: (inputStr) => {
-    return -2;
-  }
-}, {
-  pattern: '昨日|きのう|さくじつ',
-  getRelative: (inputStr) => {
-    return -1;
   }
 }];
 
@@ -57,7 +33,7 @@ const replacementMap = new Map();
 for (const elem of replacer) {
   const str = `(${elem.pattern})`;
   patternStrs.push(str);
-  elem.type = 'days';
+  elem.type = 'seconds';
   replacementMap.set(new RegExp(str), elem);
 }
 

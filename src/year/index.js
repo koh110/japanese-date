@@ -5,20 +5,16 @@ const kansuuji = util.kansuujiRegExp.toString();
 const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
 
 const replacer = [{
-  pattern: '([0-9０-９])+年(後|ご|まえ|前)',
+  pattern: `(${kansuujiPattern}|[0-9０-９]+)年(後|ご|まえ|前)`,
   getRelative: (inputStr) => {
-    inputStr = util.zenTohan(inputStr);
-    const num = inputStr.match(/[0-9]+/);
-    let parse = parseInt(num[0], 10);
-    if (/(まえ|前)/.test(inputStr)) {
-      parse = parse * (-1);
+    let num = null;
+    if (util.kansuujiRegExp.test(inputStr)) {
+      num = util.kanjiToArabic(inputStr);
+    } else {
+      inputStr = util.zenTohan(inputStr);
+      const parse = inputStr.match(/[0-9]+/);
+      num = parseInt(parse[0], 10);
     }
-    return parse;
-  }
-}, {
-  pattern: `${kansuujiPattern}年(後|ご|まえ|前)`,
-  getRelative: (inputStr) => {
-    let num = util.kanjiToArabic(inputStr);
     if (/(まえ|前)/.test(inputStr)) {
       num = num * (-1);
     }
@@ -56,6 +52,7 @@ const replacementMap = new Map();
 for (const elem of replacer) {
   const str = `(${elem.pattern})`;
   patternStrs.push(str);
+  elem.type = 'years';
   replacementMap.set(new RegExp(str), elem);
 }
 
