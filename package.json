@@ -1,7 +1,11 @@
 {
   "name": "japanese-date",
   "version": "1.0.0",
-  "description": "",
+  "description": "get date object from japanese",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/koh110/japanese-date"
+  },
   "main": "index.js",
   "scripts": {
     "test": "NODE_PATH=. ava -v",
@@ -10,6 +14,7 @@
   },
   "author": "koh110",
   "license": "MIT",
+  "engines" : { "node" : ">=6" },
   "devDependencies": {
     "ava": "^0.16.0",
     "eslint": "^3.9.1",
