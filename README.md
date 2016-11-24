@@ -59,3 +59,6 @@ const date = jpdate.getDate('来年の昨日');
 console.log(date);
 // [ 2017-11-23T15:18:48.514Z ]
 ```
+
+# License
+MIT
