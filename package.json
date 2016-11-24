@@ -1,7 +1,13 @@
 {
   "name": "japanese-date",
   "version": "1.0.0",
-  "description": "get date object from japanese",
+  "description": "date parser of japanese",
+  "keywords": [
+    "date",
+    "parser",
+    "japanese",
+    "bot"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/koh110/japanese-date"
