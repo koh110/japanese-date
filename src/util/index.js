@@ -1,11 +1,12 @@
 'use strict';
 
-const zenTohan = require('./zenTohan');
+const zenToHan = require('./zentohan');
 
 const suuji = require('./suuji');
 
 module.exports = {
-  zenTohan: zenTohan,
+  zenToHan: zenToHan,
+  convertNum: suuji.convertNum,
   kansuujiRegExp: suuji.kansuujiRegExp,
   kanjiToArabic: suuji.kanjiToArabic
 };

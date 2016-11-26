@@ -1,6 +1,6 @@
 'use strict';
 
-const zenTohan = require('./zentohan');
+const zenToHan = require('./zentohan');
 
 const suujiReplaceMap = {
   '零': '〇', '壱': '一', '弐': '二', '参': '三',
@@ -75,12 +75,12 @@ const calcUnderNum = (input) => {
   return total;
 };
 
-exports.kanjiToArabic = (str) => {
+const kanjiToArabic = (str) => {
   const match = str.match(kansuujiRegExp);
   if (match.length <= 0) {
     return null;
   }
-  let res = zenTohan(match[0])
+  let res = zenToHan(match[0])
   .replace(suujiReplaceExp, (match) => {
     return suujiReplaceMap[match];
   })
@@ -97,4 +97,20 @@ exports.kanjiToArabic = (str) => {
   }
   total += calcUnderNum(res);
   return total;
+};
+exports.kanjiToArabic = kanjiToArabic;
+
+exports.convertNum = (str) => {
+  if (!str) {
+    return null;
+  }
+  let num = null;
+  if (kansuujiRegExp.test(str)) {
+    num = kanjiToArabic(str);
+  } else {
+    str = zenToHan(str);
+    const parse = str.match(/[0-9]+/);
+    num = parseInt(parse[0], 10);
+  }
+  return num;
 };
