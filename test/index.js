@@ -7,7 +7,8 @@ const moment = require('moment');
 const jpdate = require('src');
 
 test.beforeEach((t) => {
-  t.context.timer = sinon.useFakeTimers(new Date('2016-01-22T01:23:45').getTime(), 'Date');
+  const now = moment('2016-01-22 01:23:45');
+  t.context.timer = sinon.useFakeTimers(now.toDate().getTime(), 'Date');
 });
 test.afterEach((t) => {
   t.context.timer = sinon.restore();
@@ -28,7 +29,18 @@ test('match', (t) => {
     { elem: 'あした', relative: 1, type: 'days' },
     { elem: '3秒後', relative: 3, type: 'seconds' },
     { elem: '30分後', relative: 30 * 60, type: 'seconds' },
-    { elem: '二十三時間後', relative: 23 * 60 * 60, type: 'seconds' }
+    { elem: '二十三時間後', relative: 23 * 60 * 60, type: 'seconds' },
+    { elem: '十時', relative: (moment({ hour: 10 }).toDate().getTime() - Date.now()) / 1000, type: 'seconds' },
+    {
+      elem: '十時二十分',
+      relative: (moment({ hour: 10, minute: 20 }).toDate().getTime() - Date.now()) / 1000,
+      type: 'seconds'
+    },
+    {
+      elem: '十時二十分三十五秒',
+      relative: (moment({ hour: 10, minute: 20, second: 35 }).toDate().getTime() - Date.now()) / 1000,
+      type: 'seconds'
+    }
   ];
   const inputStr = arr.map((e) => {
     return e.elem;

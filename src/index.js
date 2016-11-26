@@ -20,7 +20,7 @@ const match = (str = '', now = Date.now()) => {
         results.push({
           index: result.index,
           elem: result[0],
-          relative: replace.getRelative(matchStr),
+          relative: replace.getRelative(matchStr, now),
           type: replace.type
         });
         break;
