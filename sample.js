@@ -12,3 +12,7 @@ console.log(match);
 date = jpdate.getDate('来年の昨日の10秒後と明日');
 // eslint-disable-next-line no-console
 console.log(date);
+
+date = jpdate.getDate('今週の金曜と来週の水曜日と先週の月曜日');
+// eslint-disable-next-line no-console
+console.log(date);

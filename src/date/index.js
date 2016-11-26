@@ -57,6 +57,30 @@ const replacer = [{
     return diff;
   }
 }, {
+  pattern: '((再?来週|先週|今週)の)?(日|月|火|水|木|金|土)曜日?',
+  getRelative: (inputStr, now = Date.now()) => {
+    const week = ['日', '月', '火', '水', '木', '金', '土'];
+    const nowDay = new Date(now).getDay();
+    const match = /(日|月|火|水|木|金)/.exec(inputStr);
+    const matchDay = week.indexOf(match[0]);
+    let add = matchDay - nowDay;
+    const weekMatch = inputStr.match(/再来週|来週|先週|今週/);
+    if (weekMatch) {
+      switch (weekMatch[0]) {
+      case '来週':
+        add += 7;
+        break;
+      case '再来週':
+        add += 14;
+        break;
+      case '先週':
+        add += -7;
+        break;
+      }
+    }
+    return add;
+  }
+}, {
   pattern: '今日|きょう',
   getRelative: (inputStr) => {
     return 0;
