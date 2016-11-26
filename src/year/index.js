@@ -51,17 +51,4 @@ const replacer = [{
   }
 }];
 
-const patternStrs = [];
-const replacementMap = new Map();
-for (const elem of replacer) {
-  const str = `(${elem.pattern})`;
-  patternStrs.push(str);
-  elem.type = 'years';
-  replacementMap.set(new RegExp(str), elem);
-}
-
-const replacerObject = {
-  patterns: patternStrs,
-  map: replacementMap
-};
-exports.replacer = replacerObject;
+exports.replacer = replacer;

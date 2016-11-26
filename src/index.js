@@ -2,21 +2,21 @@
 
 const moment = require('moment');
 
-const timeReplacer = require('./time').replacer;
-const dateReplacer = require('./date').replacer;
-const yearReplacer = require('./year').replacer;
-const addPatterns = [...timeReplacer.patterns, ...dateReplacer.patterns, ...yearReplacer.patterns];
-const pattern = new RegExp(addPatterns.join('|'), 'g');
-const patternMap = new Map([...timeReplacer.map, ...dateReplacer.map, ...yearReplacer.map]);
+const { createReplacer, addReplacer } = require('./lib');
+const timeReplacer = createReplacer('seconds', require('./time').replacer);
+const dateReplacer = createReplacer('days', require('./date').replacer);
+const yearReplacer = createReplacer('years', require('./year').replacer);
+const { pattern, map } = addReplacer([timeReplacer, dateReplacer, yearReplacer]);
 
 const match = (str = '', now = Date.now()) => {
   let result;
   const results = [];
   while ((result = pattern.exec(str)) !== null) {
     const matchStr = result[0];
-    for (const regexp of patternMap.keys()) {
+    for (const entry of map.entries()) {
+      const regexp = entry[0];
       if (regexp.test(matchStr)) {
-        const replace = patternMap.get(regexp);
+        const replace = entry[1];
         results.push({
           index: result.index,
           elem: result[0],
