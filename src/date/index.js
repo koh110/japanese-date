@@ -61,7 +61,7 @@ const replacer = [{
   getRelative: (inputStr, now = Date.now()) => {
     const week = ['日', '月', '火', '水', '木', '金', '土'];
     const nowDay = new Date(now).getDay();
-    const match = /(日|月|火|水|木|金)/.exec(inputStr);
+    const match = /(日|月|火|水|木|金|土)/.exec(inputStr);
     const matchDay = week.indexOf(match[0]);
     let add = matchDay - nowDay;
     const weekMatch = inputStr.match(/再来週|来週|先週|今週/);

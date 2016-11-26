@@ -90,7 +90,10 @@ test('getDate', (t) => {
     '10年後の昨日': moment(now).add(10, 'years').add(-1, 'days'),
     '百年後の一昨日': moment(now).add(100, 'years').add(-2, 'days'),
     '明日の10時': moment({ hour: 10 }).add(1, 'days'),
-    '来年の10時二十三分': moment({ hour: 10, minute: 23 }).add(1, 'years')
+    '来年の10時二十三分': moment({ hour: 10, minute: 23 }).add(1, 'years'),
+    '今週の土曜': moment(now).add(1, 'days'),
+    '来週の水曜日': moment(now).add(5, 'days'),
+    '先週の月曜日': moment(now).add(-11, 'days')
   };
   const keys = Object.keys(obj);
   const inputStr = keys.join(',');
