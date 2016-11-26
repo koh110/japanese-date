@@ -29,7 +29,11 @@ const replacer = [{
     return diff;
   }
 }, {
-  pattern: `((${kansuujiPattern}|[0-9０-９]{1,2})(時|分|秒))+`,
+  pattern: [
+    `(${kansuujiPattern}|[0-9０-９]{1,2})時`,
+    `((${kansuujiPattern}|[0-9０-９]{1,2})分)?`,
+    `((${kansuujiPattern}|[0-9０-９]{1,2})秒)?`
+  ].join(''),
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)時)?((.+)分)?((.+)秒)?/);
     const dateObj = {};

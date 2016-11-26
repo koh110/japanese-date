@@ -31,3 +31,25 @@ exports.addReplacer = (replacerArray) => {
     map: map
   };
 };
+
+exports.patternMatch = (str = '', pattern, map, now = Date.now()) => {
+  let result;
+  const results = [];
+  while ((result = pattern.exec(str)) !== null) {
+    const matchStr = result[0];
+    for (const entry of map.entries()) {
+      const regexp = entry[0];
+      if (regexp.test(matchStr)) {
+        const replace = entry[1];
+        results.push({
+          index: result.index,
+          elem: result[0],
+          relative: replace.getRelative(matchStr, now),
+          type: replace.type
+        });
+        break;
+      }
+    }
+  }
+  return results;
+};
