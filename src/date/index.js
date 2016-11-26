@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 const { convertNum, kansuujiRegExp } = require('../util');
 const kansuuji = kansuujiRegExp.toString();
 const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
@@ -12,6 +13,26 @@ const replacer = [{
       num = num * (-1);
     }
     return num;
+  }
+}, {
+  pattern: `((${kansuujiPattern}|[0-9０-９]{4})+年)?((${kansuujiPattern}|[0-9０-９]{1,2})(月|日))+`,
+  getRelative: (inputStr, now = Date.now()) => {
+    const match = inputStr.match(/((.+)年)?((.+)月)?((.+)日)/);
+    const year = convertNum(match[2]);
+    const month = convertNum(match[4]);
+    const day = convertNum(match[6]);
+    const nowMoment = moment(now);
+    const inputMoment = moment({
+      year: year,
+      month: month - 1,
+      day: day,
+      hour: nowMoment.hour(),
+      minute: nowMoment.minute(),
+      second: nowMoment.second(),
+      millisecond: nowMoment.millisecond()
+    });
+    const diff = inputMoment.diff(nowMoment, 'days');
+    return diff;
   }
 }, {
   pattern: '今日|きょう',

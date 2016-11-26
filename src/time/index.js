@@ -25,13 +25,11 @@ const replacer = [{
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)時)/);
     const hour = convertNum(match[2]);
-    const date = moment({ hour: hour, minute: 30 }).toDate();
-    const num = (date.getTime() - now) / 1000;
-
-    return num;
+    const diff = moment({ hour: hour, minute: 30 }).diff(now, 'seconds');
+    return diff;
   }
 }, {
-  pattern: `((${kansuujiPattern}|[0-9０-９]{2})(時|分|秒))+`,
+  pattern: `((${kansuujiPattern}|[0-9０-９]{1,2})(時|分|秒))+`,
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)時)?((.+)分)?((.+)秒)?/);
     const dateObj = {};
