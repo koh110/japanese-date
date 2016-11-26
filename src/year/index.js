@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 const { convertNum, kansuujiRegExp } = require('../util');
 const kansuuji = kansuujiRegExp.toString();
 const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
@@ -12,6 +13,16 @@ const replacer = [{
       num = num * (-1);
     }
     return num;
+  }
+}, {
+  pattern: `((${kansuujiPattern}|[0-9０-９]{4})+年)`,
+  getRelative: (inputStr, now = Date.now()) => {
+    const match = inputStr.match(/((.+)年)/);
+    const year = convertNum(match[2]);
+    const nowMoment = moment(now);
+    const inputMoment = moment(now).year(year);
+    const diff = inputMoment.diff(nowMoment, 'years');
+    return diff;
   }
 }, {
   pattern: '今年|ことし',

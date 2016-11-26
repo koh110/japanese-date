@@ -15,17 +15,39 @@ const replacer = [{
     return num;
   }
 }, {
-  pattern: `((${kansuujiPattern}|[0-9０-９]{4})+年)?((${kansuujiPattern}|[0-9０-９]{1,2})(月|日))+`,
+  pattern: [
+    `(${kansuujiPattern}|[0-9０-９]{4})/`,
+    `(${kansuujiPattern}|[0-9０-９]{1,2})/?`,
+    `(${kansuujiPattern}|[0-9０-９]{1,2})`
+  ].join(''),
+  getRelative: (inputStr, now = Date.now()) => {
+    const match = inputStr.match(/(.+)\/(.+)\/(.+)/);
+    const year = convertNum(match[1]);
+    const month = convertNum(match[2]);
+    const date = convertNum(match[3]);
+    const inputMoment = moment(now)
+    .year(year)
+    .month(month - 1)
+    .date(date);
+    const diff = inputMoment.diff(now, 'days');
+    return diff;
+  }
+}, {
+  pattern: [
+    `((${kansuujiPattern}|[0-9０-９]{4})年)?`,
+    `((${kansuujiPattern}|[0-9０-９]{1,2})月)?`,
+    `((${kansuujiPattern}|[0-9０-９]{1,2})日)`
+  ].join(''),
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)年)?((.+)月)?((.+)日)/);
     const year = convertNum(match[2]);
     const month = convertNum(match[4]);
-    const day = convertNum(match[6]);
+    const date = convertNum(match[6]);
     const nowMoment = moment(now);
     const inputMoment = moment({
       year: year,
       month: month - 1,
-      day: day,
+      date: date,
       hour: nowMoment.hour(),
       minute: nowMoment.minute(),
       second: nowMoment.second(),

@@ -17,6 +17,7 @@ test.afterEach((t) => {
 test('match', (t) => {
   const arr = [
     { elem: '来年', relative: 1, type: 'years' },
+    { elem: '2017年', relative: 1, type: 'years' },
     { elem: 'きょう', relative: 0, type: 'days' },
     { elem: '一年前', relative: -1, type: 'years' },
     { elem: '十日後', relative: 10, type: 'days' },
@@ -29,6 +30,8 @@ test('match', (t) => {
     { elem: 'あした', relative: 1, type: 'days' },
     { elem: '1月23日', relative: 1, type: 'days' },
     { elem: '2015年1月23日', relative: -364, type: 'days' },
+    { elem: '2015/1/23', relative: -364, type: 'days' },
+    { elem: '二〇一五/一/二三', relative: -364, type: 'days' },
     { elem: '3秒後', relative: 3, type: 'seconds' },
     { elem: '30分後', relative: 30 * 60, type: 'seconds' },
     { elem: '二十三時間後', relative: 23 * 60 * 60, type: 'seconds' },
@@ -74,6 +77,7 @@ test('getDate', (t) => {
     '10時半': moment({ hour: 10, minute: 30 }),
     'あさって': moment(now).add(2, 'days'),
     '2015年1月23日': moment(now).add(-1, 'years').add(1, 'days'),
+    '2015年の1月23日': moment(now).add(-1, 'years').add(1, 'days'),
     '明日の一時間後': moment(now).add(1, 'days').add(1, 'hours'),
     '来年のきょう': moment(now).add(1, 'years'),
     '一年前の十日後': moment(now).add(-1, 'years').add(10, 'days'),
