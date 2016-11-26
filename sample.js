@@ -21,7 +21,8 @@ const patterns = [
   '明日の10時',
   '来年の10時二十三分',
   '来年の昨日の10秒後と明日',
-  '今週の土曜と来週の水曜日と先週の月曜日'
+  '今週の土曜と来週の水曜日と先週の月曜日',
+  '来月の11日'
 ];
 for (const pattern of patterns) {
   // eslint-disable-next-line no-console

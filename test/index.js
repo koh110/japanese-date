@@ -93,7 +93,8 @@ test('getDate', (t) => {
     '来年の10時二十三分': moment({ hour: 10, minute: 23 }).add(1, 'years'),
     '今週の土曜': moment(now).add(1, 'days'),
     '来週の水曜日': moment(now).add(5, 'days'),
-    '先週の月曜日': moment(now).add(-11, 'days')
+    '先週の月曜日': moment(now).add(-11, 'days'),
+    '来月の11日': moment(now).add(1, 'month').date(11)
   };
   const keys = Object.keys(obj);
   const inputStr = keys.join(',');
