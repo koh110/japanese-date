@@ -42,23 +42,62 @@ const replacer = [{
     return diff;
   }
 }, {
-  pattern: '((再?来週|先週|今週)の)?(日|月|火|水|木|金|土)曜日?',
+  pattern: `((再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ)の)(${kansuujiPattern}|[0-9０-９]{1,2})日?`,
+  getRelative: (inputStr, now = Date.now()) => {
+    const numberRegExp = new RegExp(`${kansuujiPattern}|[0-9０-９]{1,2}`);
+    const match = inputStr.match(numberRegExp);
+    const date = convertNum(match[0]);
+    const nowMoment = moment(now);
+    const inputMoment = moment({
+      date: date,
+      hour: nowMoment.hour(),
+      minute: nowMoment.minute(),
+      second: nowMoment.second(),
+      millisecond: nowMoment.millisecond()
+    });
+    const monthMatch = inputStr.match(/再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ/);
+    let add = 0;
+    if (monthMatch) {
+      switch (monthMatch[0]) {
+      case '来月':
+      case 'らいげつ':
+        add = 1;
+        break;
+      case '再来月':
+      case 'さらいげつ':
+        add = 2;
+        break;
+      case '先月':
+      case 'せんげつ':
+        add = -1;
+        break;
+      }
+    }
+    inputMoment.add(add, 'month');
+    const diff = inputMoment.diff(now, 'days');
+    return diff;
+  }
+}, {
+  pattern: '((再?来週|先週|今週|さ?らいしゅう|せんしゅう|こんしゅう)の)?(日|月|火|水|木|金|土)曜日?',
   getRelative: (inputStr, now = Date.now()) => {
     const week = ['日', '月', '火', '水', '木', '金', '土'];
     const nowDay = new Date(now).getDay();
     const match = /(日|月|火|水|木|金|土)/.exec(inputStr);
     const matchDay = week.indexOf(match[0]);
     let add = matchDay - nowDay;
-    const weekMatch = inputStr.match(/再来週|来週|先週|今週/);
+    const weekMatch = inputStr.match(/再来週|来週|先週|さらいしゅう|らいしゅう|せんしゅう/);
     if (weekMatch) {
       switch (weekMatch[0]) {
       case '来週':
+      case 'らいしゅう':
         add += 7;
         break;
       case '再来週':
+      case 'さらいしゅう':
         add += 14;
         break;
       case '先週':
+      case 'せんしゅう':
         add += -7;
         break;
       }

@@ -17,6 +17,7 @@ const { replacer } = require('src/date');
 
 test('check match pattern', (t) => {
   const { pattern, map } = addReplacer([createReplacer('days', replacer)]);
+  const now = moment();
   const inputs = {
     '今日': 0, 'きょう': 0, '明日': 1, 'みょうじつ': 1, 'あした': 1,
     '翌日': 1, 'よくじつ': 1,
@@ -24,7 +25,11 @@ test('check match pattern', (t) => {
     '昨日': -1, '一昨日': -2, 'おととい': -2,
     '1日前': -1, '２日後': 2, '十日まえ': -10,
     '火曜日': -3, '来週の火曜日': 4, '先週の火曜日': -10, '再来週の水曜日': 12,
-    '10日後': 10, '二十三日前': -23
+    '10日後': 10, '二十三日前': -23,
+    '来月の11日': moment(now).add(1, 'month').date(11).diff(now, 'days'),
+    '再来月の23日': moment().add(2, 'month').date(23).diff(now, 'days'),
+    '先月の3日': moment().add(-1, 'month').date(3).diff(now, 'days'),
+    'こんげつの11日': moment().date(11).diff(now, 'days')
   };
   const today = moment();
   const yesterday = moment().add(-1, 'days');
