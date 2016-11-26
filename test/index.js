@@ -37,6 +37,11 @@ test('match', (t) => {
       type: 'seconds'
     },
     {
+      elem: '十壱時半',
+      relative: (moment({ hour: 11, minute: 30 }).toDate().getTime() - Date.now()) / 1000,
+      type: 'seconds'
+    },
+    {
       elem: '十時二十分三十五秒',
       relative: (moment({ hour: 10, minute: 20, second: 35 }).toDate().getTime() - Date.now()) / 1000,
       type: 'seconds'
@@ -59,6 +64,7 @@ test('getDate', (t) => {
   const now = Date.now();
   const obj = {
     '50分後': moment(now).add(50, 'minutes').toDate(),
+    '10時半': moment({ hour: 10, minute: 30 }).toDate(),
     'あさって': moment(now).add(2, 'days').toDate(),
     '明日の一時間後': moment(now).add(1, 'days').add(1, 'hours').toDate(),
     '来年のきょう': moment(now).add(1, 'years').toDate(),
@@ -66,7 +72,9 @@ test('getDate', (t) => {
     '2年後の21日前': moment(now).add(2, 'years').add(-21, 'days').toDate(),
     '３年後': moment(now).add(3, 'years').toDate(),
     '10年後の昨日': moment(now).add(10, 'years').add(-1, 'days').toDate(),
-    '百年後の一昨日': moment(now).add(100, 'years').add(-2, 'days').toDate()
+    '百年後の一昨日': moment(now).add(100, 'years').add(-2, 'days').toDate(),
+    '明日の10時': moment({ hour: 10 }).add(1, 'days').toDate(),
+    '来年の10時二十三分': moment({ hour: 10, minute: 23 }).add(1, 'years').toDate()
   };
   const keys = Object.keys(obj);
   const inputStr = keys.join(',');
