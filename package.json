@@ -12,7 +12,7 @@
     "type": "git",
     "url": "https://github.com/koh110/japanese-date"
   },
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "NODE_PATH=. ava -v",
     "test:util": "NODE_PATH=. ava -v test/util",
