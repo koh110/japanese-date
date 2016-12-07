@@ -1,5 +1,7 @@
 # japanese-date
 
+[![Build Status](https://travis-ci.org/koh110/japanese-date.svg?branch=master)](https://travis-ci.org/koh110/japanese-date)
+
 日本語からDateオブジェクトを取得するparser
 
 # Installation
