@@ -20,6 +20,7 @@ test('check match pattern', (t) => {
   const now = moment();
   const inputs = {
     '一分後': 1 * 60, '１５時間前': -15 * 60 * 60, '20秒まえ': -20,
+    '一時間半後': 1 * 60 * 60 + 30 * 60,
     '１０時': moment({ hour: 10 }).diff(now, 'seconds'),
     '十時二十分': moment({ hour: 10, minute: 20 }).diff(now, 'seconds'),
     '十壱時半': moment({ hour: 11, minute: 30 }).diff(now, 'seconds'),

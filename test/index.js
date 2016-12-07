@@ -39,6 +39,7 @@ test('match', (t) => {
     { elem: '3秒後', relative: 3, type: 'seconds' },
     { elem: '30分後', relative: 30 * 60, type: 'seconds' },
     { elem: '二十三時間後', relative: 23 * 60 * 60, type: 'seconds' },
+    { elem: '2時間半前', relative: -(2 * 60 * 60 + 30 * 60), type: 'seconds' },
     { elem: '10時', relative: (moment({ hour: 10 }).toDate().getTime() - Date.now()) / 1000, type: 'seconds' },
     {
       elem: '10時1分',
