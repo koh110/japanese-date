@@ -10,8 +10,7 @@ npm install japanese-date
 
 # Usage
 Node.js v6以上で動きます。  
-babelを通せば多分それ以下とフロントエンドでも動きます。  
-
+babelを通せば多分フロントエンドでも動きます。  
 
 ```
 const jpdate = require('japanese-date');
