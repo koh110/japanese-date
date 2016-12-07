@@ -4,10 +4,9 @@ exports.createReplacer = (type, replacerArray) => {
   const patternStrs = [];
   const replacementMap = new Map();
   for (const elem of replacerArray) {
-    const str = `(${elem.pattern})`;
-    patternStrs.push(str);
+    patternStrs.push(elem.pattern);
     elem.type = type;
-    replacementMap.set(new RegExp(str), elem);
+    replacementMap.set(new RegExp(elem.pattern), elem);
   }
 
   const replacer = {
