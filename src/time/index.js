@@ -6,7 +6,7 @@ const kansuuji = kansuujiRegExp.toString();
 const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
 
 const replacer = [{
-  pattern: `(${kansuujiPattern}|[0-9０-９]+)(秒|分|時間)(後|ご|まえ|前)`,
+  pattern: `(${kansuujiPattern}|[0-9０-９]+)(秒|分|時間半?)(後|ご|まえ|前)`,
   getRelative: (inputStr) => {
     let num = convertNum(inputStr);
     const unit = inputStr.match(/秒|分|時間/);
@@ -14,6 +14,9 @@ const replacer = [{
       num = num * 60;
     } else if (unit[0] === '時間') {
       num = num * 3600;
+      if (/半/.test(inputStr)) {
+        num += 1800;
+      }
     }
     if (/(まえ|前)/.test(inputStr)) {
       num = num * (-1);
