@@ -2,11 +2,22 @@
 
 const zenToHan = require('./zentohan');
 
-const suujiReplaceMap = {
-  '零': '〇', '壱': '一', '弐': '二', '参': '三',
-  '拾': '十', '萬': '万'
+const kyuujiReplaceMap = {
+  '零': '〇',
+  '壱': '一', '壹': '一', '弌': '一',
+  '弐': '二', '貳': '二', '貮': '二',
+  '参': '三', '參': '三', '弎': '三',
+  '肆': '四', '伍': '五', '陸': '六',
+  '漆': '七', '柒': '七', '捌': '八',
+  '玖': '九', '拾': '十',
+  '廿': '二十', '卄': '二十',
+  '卅': '三十', '丗': '三十',
+  '卌': '四十',
+  '陌': '百', '佰': '百',
+  '阡': '千', '仟': '千',
+  '萬': '万'
 };
-const suujiReplaceExp = new RegExp(`(${Object.keys(suujiReplaceMap).join('|')})`, 'g');
+const kyuujiReplaceExp = new RegExp(`(${Object.keys(kyuujiReplaceMap).join('|')})`, 'g');
 const suujiMap = {
   '〇': 0, '一': 1, '二': 2, '三': 3, '四': 4,
   '五': 5, '六': 6, '七': 7, '八': 8, '九': 9
@@ -40,7 +51,7 @@ const highKetaMap = {
 const highKetaRegExp = new RegExp(`(${Object.keys(highKetaMap).join('|')})`, 'g');
 
 const kansuuji = [
-  Object.keys(suujiReplaceMap).join('|'),
+  Object.keys(kyuujiReplaceMap).join('|'),
   Object.keys(suujiMap).join('|'),
   Object.keys(lowKetaMap).join('|'),
   Object.keys(highKetaMap).join('|')
@@ -81,8 +92,8 @@ const kanjiToArabic = (str) => {
     return null;
   }
   let res = zenToHan(match[0])
-  .replace(suujiReplaceExp, (match) => {
-    return suujiReplaceMap[match];
+  .replace(kyuujiReplaceExp, (match) => {
+    return kyuujiReplaceMap[match];
   })
   .replace(suujiMapRegExp, (match) => {
     return suujiMap[match];
@@ -100,6 +111,7 @@ const kanjiToArabic = (str) => {
 };
 exports.kanjiToArabic = kanjiToArabic;
 
+// 数字だろうが漢数字だろうが変換
 exports.convertNum = (str) => {
   if (!str) {
     return null;
