@@ -23,14 +23,14 @@ const getDate = (str = '', now = Date.now()) => {
   };
   const pushRes = () => {
     const date = moment(now);
-    if (tmp.years) {
-      date.add(tmp.years.relative, 'years');
+    if (tmp.seconds) {
+      date.add(tmp.seconds.relative, 'seconds');
     }
     if (tmp.days) {
       date.add(tmp.days.relative, 'days');
     }
-    if (tmp.seconds) {
-      date.add(tmp.seconds.relative, 'seconds');
+    if (tmp.years) {
+      date.add(tmp.years.relative, 'years');
     }
     res.push(date.toDate());
     tmp.years = null;

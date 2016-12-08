@@ -5,7 +5,23 @@ const { convertNum, kansuujiRegExp } = require('../util');
 const kansuuji = kansuujiRegExp.toString();
 const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
 
+const calendar = require('./calendar');
+
 const replacer = [{
+  pattern: calendar.pattern,
+  getRelative: (inputStr, now = Date.now()) => {
+    let inputMoment = null;
+    for (const elem of calendar.map.entries()) {
+      const regExp = elem[0];
+      if (regExp.test(inputStr)) {
+        const createSeed = elem[1];
+        inputMoment = moment(now).set(createSeed(inputStr));
+        break;
+      }
+    }
+    return inputMoment.diff(now, 'days');
+  }
+}, {
   pattern: `(${kansuujiPattern}|[0-9０-９]+)日(後|ご|まえ|前)`,
   getRelative: (inputStr) => {
     let num = convertNum(inputStr);
@@ -29,14 +45,10 @@ const replacer = [{
     const month = convert ? convert - 1 : nowMoment.month();
     convert = convertNum(match[6]);
     const date = convert ? convert : nowMoment.date();
-    const inputMoment = moment({
+    const inputMoment = moment(now).set({
       year: year,
       month: month,
-      date: date,
-      hour: nowMoment.hour(),
-      minute: nowMoment.minute(),
-      second: nowMoment.second(),
-      millisecond: nowMoment.millisecond()
+      date: date
     });
     const diff = inputMoment.diff(now, 'days');
     return diff;
@@ -47,14 +59,7 @@ const replacer = [{
     const numberRegExp = new RegExp(`${kansuujiPattern}|[0-9０-９]{1,2}`);
     const match = inputStr.match(numberRegExp);
     const date = convertNum(match[0]);
-    const nowMoment = moment(now);
-    const inputMoment = moment({
-      date: date,
-      hour: nowMoment.hour(),
-      minute: nowMoment.minute(),
-      second: nowMoment.second(),
-      millisecond: nowMoment.millisecond()
-    });
+    const inputMoment = moment(now).date(date);
     const monthMatch = inputStr.match(/再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ/);
     let add = 0;
     if (monthMatch) {

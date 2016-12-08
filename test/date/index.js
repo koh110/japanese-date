@@ -26,10 +26,14 @@ test('check match pattern', (t) => {
     '1日前': -1, '２日後': 2, '十日まえ': -10,
     '火曜日': -3, '来週の火曜日': 4, '先週の火曜日': -10, '再来週の水曜日': 12,
     '10日後': 10, '二十三日前': -23,
-    '来月の11日': moment(now).add(1, 'month').date(11).diff(now, 'days'),
+    '来月の11日': moment().add(1, 'month').date(11).diff(now, 'days'),
     '再来月の23日': moment().add(2, 'month').date(23).diff(now, 'days'),
     '先月の3日': moment().add(-1, 'month').date(3).diff(now, 'days'),
-    'こんげつの11日': moment().date(11).diff(now, 'days')
+    'こんげつの11日': moment().date(11).diff(now, 'days'),
+    '大晦日': moment().set({ month: 11, date: 31 }).diff(now, 'days'),
+    'クリスマスイブ': moment().set({ month: 11, date: 24 }).diff(now, 'days'),
+    'クリスマス': moment().set({ month: 11, date: 25 }).diff(now, 'days'),
+    '元日': moment().set({ month: 0, date: 1 }).diff(now, 'days')
   };
   const today = moment();
   const yesterday = moment().add(-1, 'days');
@@ -48,9 +52,9 @@ test('check match pattern', (t) => {
 
   const inputStrs = Object.keys(inputs);
   const matched = patternMatch(inputStrs.join(''), pattern, map, Date.now());
-  t.is(matched.length, inputStrs.length, '全てのパターンにmatchしている');
   for (const entry of matched.entries()) {
     const match = entry[1];
     t.is(match.relative, inputs[match.elem], `[${match.elem}]のパターン`);
   }
+  t.is(matched.length, inputStrs.length, '全てのパターンにmatchしている');
 });
