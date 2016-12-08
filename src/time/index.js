@@ -24,6 +24,12 @@ const replacer = [{
     return num;
   }
 }, {
+  pattern: '正午',
+  getRelative: (inputStr, now = Date.now()) => {
+    const diff = moment({ hour: 12 }).diff(now, 'seconds');
+    return diff;
+  }
+}, {
   pattern: `(${kansuujiPattern}|[0-9０-９]{2})時半`,
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)時)/);
@@ -33,6 +39,7 @@ const replacer = [{
   }
 }, {
   pattern: [
+    '(午前|ごぜん|午後|ごご)?',
     `(${kansuujiPattern}|[0-9０-９]{1,2})時`,
     `((${kansuujiPattern}|[0-9０-９]{1,2})分)?`,
     `((${kansuujiPattern}|[0-9０-９]{1,2})秒)?`
@@ -42,7 +49,11 @@ const replacer = [{
     const dateObj = {};
     const hour = convertNum(match[2]);
     if (hour) {
-      dateObj.hour = hour;
+      let add = 0;
+      if (/午後|ごご/.test(inputStr) && hour <= 12) {
+        add = 12;
+      }
+      dateObj.hour = hour + add;
     }
     const minute = convertNum(match[4]);
     if (minute) {

@@ -61,13 +61,18 @@ test('match', (t) => {
       elem: '十時二十分三十五秒',
       relative: (moment({ hour: 10, minute: 20, second: 35 }).toDate().getTime() - Date.now()) / 1000,
       type: 'seconds'
+    },
+    {
+      elem: '正午',
+      relative: (moment({ hour: 12 }).toDate().getTime() - Date.now()) / 1000,
+      type: 'seconds'
     }
   ];
   const inputStr = arr.map((e) => {
     return e.elem;
   }).join(',');
   const dates = jpdate.match(inputStr, Date.now());
-  t.is(dates.length, arr.length);
+  t.is(dates.length, arr.length, '入力パターン数と一致している');
   for (const entry of dates.entries()) {
     const date = entry[1];
     t.truthy(date.hasOwnProperty('index'));
@@ -96,12 +101,13 @@ test('getDate', (t) => {
     '今週の土曜': moment(now).add(1, 'days'),
     '来週の水曜日': moment(now).add(5, 'days'),
     '先週の月曜日': moment(now).add(-11, 'days'),
-    '来月の11日': moment(now).add(1, 'month').date(11)
+    '来月の11日': moment(now).add(1, 'month').date(11),
+    '明日の正午': moment({ hour: 12 }).add(1, 'days').hours(12)
   };
   const keys = Object.keys(obj);
   const inputStr = keys.join(',');
   const dates = jpdate.getDate(inputStr, now);
-  t.is(dates.length, keys.length);
+  t.is(dates.length, keys.length, '入力パターン数一致している');
   for (const entry of dates.entries()) {
     const date = entry[1];
     const inputDate = obj[keys[entry[0]]];
