@@ -9,12 +9,21 @@ const yearReplacer = createReplacer('years', require('./year').replacer);
 const { pattern, map } = addReplacer([timeReplacer, dateReplacer, yearReplacer]);
 
 const match = (str = '', now = Date.now()) => {
-  return patternMatch(str, pattern, map, now);
+  const results = patternMatch(str, pattern, map, now);
+  const res = results.map((elem) => {
+    return {
+      index: elem.index,
+      elem: elem.elem,
+      relative: elem.getRelative(elem.elem, now),
+      type: elem.type
+    };
+  });
+  return res;
 };
 exports.match = match;
 
 const getDate = (str = '', now = Date.now()) => {
-  const results = match(str, now);
+  const results = patternMatch(str, pattern, map, now);
   const res = [];
   const tmp = {
     years: null,
@@ -22,15 +31,19 @@ const getDate = (str = '', now = Date.now()) => {
     seconds: null
   };
   const pushRes = () => {
+    let tmpNow = now;
     const date = moment(now);
-    if (tmp.seconds) {
-      date.add(tmp.seconds.relative, 'seconds');
+    if (tmp.years) {
+      date.add(tmp.years.getRelative(tmp.years.elem, tmpNow), 'years');
+      tmpNow = date.toDate().getTime();
     }
     if (tmp.days) {
-      date.add(tmp.days.relative, 'days');
+      date.add(tmp.days.getRelative(tmp.days.elem, tmpNow), 'days');
+      tmpNow = date.toDate().getTime();
     }
-    if (tmp.years) {
-      date.add(tmp.years.relative, 'years');
+    if (tmp.seconds) {
+      date.add(tmp.seconds.getRelative(tmp.seconds.elem, tmpNow), 'seconds');
+      tmpNow = date.toDate().getTime();
     }
     res.push(date.toDate());
     tmp.years = null;

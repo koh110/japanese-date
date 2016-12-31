@@ -27,10 +27,11 @@ test('check match pattern', (t) => {
   inputs[next.format('YYYY年')] = 1;
 
   const inputStrs = Object.keys(inputs);
-  const matched = patternMatch(inputStrs.join(''), pattern, map, Date.now());
+  const now = Date.now();
+  const matched = patternMatch(inputStrs.join(''), pattern, map, now);
   t.is(matched.length, inputStrs.length);
   for (const entry of matched.entries()) {
     const match = entry[1];
-    t.is(match.relative, inputs[match.elem], `[${match.elem}]のパターンが間違っています`);
+    t.is(match.getRelative(match.elem, now), inputs[match.elem], `[${match.elem}]のパターンが間違っています`);
   }
 });

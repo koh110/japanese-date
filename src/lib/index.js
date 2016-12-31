@@ -43,7 +43,7 @@ exports.patternMatch = (str = '', pattern, map, now = Date.now()) => {
         results.push({
           index: result.index,
           elem: result[0],
-          relative: replace.getRelative(matchStr, now),
+          getRelative: replace.getRelative,
           type: replace.type
         });
         break;

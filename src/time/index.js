@@ -26,7 +26,7 @@ const replacer = [{
 }, {
   pattern: '正午',
   getRelative: (inputStr, now = Date.now()) => {
-    const diff = moment({ hour: 12 }).diff(now, 'seconds');
+    const diff = moment(now).set({ hour: 12, minute: 0, seconds: 0 }).diff(now, 'seconds');
     return diff;
   }
 }, {
@@ -56,14 +56,10 @@ const replacer = [{
       dateObj.hour = hour + add;
     }
     const minute = convertNum(match[4]);
-    if (minute) {
-      dateObj.minute = minute;
-    }
+    dateObj.minute = minute ? minute : 0;
     const second = convertNum(match[6]);
-    if (second) {
-      dateObj.second = second;
-    }
-    const date = moment(dateObj).toDate();
+    dateObj.second = second ? second : 0;
+    const date = moment(now).set(dateObj).toDate();
     const num = (date.getTime() - now) / 1000;
 
     return num;
