@@ -105,7 +105,8 @@ test('getDate', (t) => {
     '明日の正午': moment({ hour: 12 }).add(1, 'days').hours(12),
     '来年の大晦日': moment(now).set({ month: 11, date: 31 }).add(1, 'years'),
     '去年のクリスマスイブ': moment(now).set({ month: 11, date: 24 }).add(-1, 'years'),
-    '一昨年の元日': moment(now).set({ month: 0, date: 1 }).add(-2, 'years')
+    '一昨年の元日': moment(now).set({ month: 0, date: 1 }).add(-2, 'years'),
+    '来年の成人の日': moment(now).set({ month: 0, date: 9 }).add(1, 'years')
   };
   const keys = Object.keys(obj);
   const inputStr = keys.join(',');

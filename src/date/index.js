@@ -14,8 +14,7 @@ const replacer = [{
     for (const elem of calendar.map.entries()) {
       const regExp = elem[0];
       if (regExp.test(inputStr)) {
-        const createSeed = elem[1];
-        inputMoment = moment(now).set(createSeed(inputStr));
+        inputMoment = elem[1](inputStr, now);
         break;
       }
     }

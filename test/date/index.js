@@ -34,7 +34,8 @@ test('check match pattern', (t) => {
     '大晦日': moment().set({ month: 11, date: 31 }).diff(nowMoment, 'days'),
     'クリスマスイブ': moment().set({ month: 11, date: 24 }).diff(nowMoment, 'days'),
     'クリスマス': moment().set({ month: 11, date: 25 }).diff(nowMoment, 'days'),
-    '元日': moment().set({ month: 0, date: 1 }).diff(nowMoment, 'days')
+    '元日': moment().set({ month: 0, date: 1 }).diff(nowMoment, 'days'),
+    '成人の日': moment().set({ month: 0, date: 11 }).diff(nowMoment, 'days')
   };
   const today = moment();
   const yesterday = moment().add(-1, 'days');
