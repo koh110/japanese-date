@@ -1,10 +1,10 @@
 'use strict';
 
+const { convertRegExpToPattern } = require('../../lib');
 const map = require('./map');
 
 const keyStrs = [...map.keys()].map((regExp) => {
-  const str = regExp.toString();
-  return str.slice(1, str.length - 1);
+  return convertRegExpToPattern(regExp);
 });
 
 const pattern = `(${keyStrs.join('|')})`;

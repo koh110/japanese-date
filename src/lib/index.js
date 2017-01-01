@@ -1,5 +1,15 @@
 'use strict';
 
+// 正規表現を前後の/を落とした文字列化する
+exports.convertRegExpToPattern = (regExp) => {
+  const str = regExp.toString();
+  // /で終わってない場合はgとかがついてるので2個削る
+  if (str.charAt(str.length - 1) !== '/') {
+    return str.slice(1, str.length - 2);
+  }
+  return str.slice(1, str.length - 1);
+};
+
 exports.createReplacer = (type, replacerArray) => {
   const patternStrs = [];
   const replacementMap = new Map();
