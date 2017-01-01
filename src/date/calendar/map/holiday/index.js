@@ -2,7 +2,8 @@
 
 const moment = require('moment');
 
-const { getDateFromNthDay } = require('./lib');
+const { getDateFromNthDay } = require('../lib');
+const { spling: equinoxSpling, autumnal: equinoxAutumnal } = require('./equinox');
 
 const week = Object.freeze({
   sunday: 0,
@@ -15,6 +16,7 @@ const week = Object.freeze({
 });
 
 const holidayMap = new Map([
+  equinoxSpling, equinoxAutumnal,
   [/元日|がんじつ/, (str, now = Date.now()) => {
     return moment(now).set({ month: 0, date: 1 });
   }],

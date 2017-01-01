@@ -132,7 +132,9 @@ test('getDate', (t) => {
     // 1966~1999年までは10/10固定
     '1995年の体育の日': moment(now).set({ year: 1995, month: 9, date: 10 }),
     // 2016年が10/10だったので2015年のテストを追加
-    '2015年の体育の日': moment(now).set({ year: 2015, month: 9, date: 12 })
+    '2015年の体育の日': moment(now).set({ year: 2015, month: 9, date: 12 }),
+    '2015年の春分の日': moment(now).set({ year: 2015, month: 2, date: 21 }),
+    '2015年の秋分の日': moment(now).set({ year: 2015, month: 8, date: 23 })
   };
   const keys = Object.keys(obj);
   const inputStr = keys.join(',');

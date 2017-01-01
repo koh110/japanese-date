@@ -47,7 +47,9 @@ test('check match pattern', (t) => {
     '体育の日': moment().set({ month: 9, date: 10 }).diff(nowMoment, 'days'),
     '文化の日': moment().set({ month: 10, date: 3 }).diff(nowMoment, 'days'),
     '勤労感謝の日': moment().set({ month: 10, date: 23 }).diff(nowMoment, 'days'),
-    '天皇誕生日': moment().set({ month: 11, date: 23 }).diff(nowMoment, 'days')
+    '天皇誕生日': moment().set({ month: 11, date: 23 }).diff(nowMoment, 'days'),
+    '春分の日': moment().set({ month: 2, date: 20 }).diff(nowMoment, 'days'),
+    '秋分の日': moment().set({ month: 8, date: 22 }).diff(nowMoment, 'days')
   };
   const today = moment();
   const yesterday = moment().add(-1, 'days');
