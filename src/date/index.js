@@ -5,22 +5,9 @@ const { convertNum, kansuujiRegExp } = require('../util');
 const kansuuji = kansuujiRegExp.toString();
 const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
 
-const calendar = require('./calendar');
+const calendarReplacer = require('./calendar');
 
-const replacer = [{
-  pattern: calendar.pattern,
-  getRelative: (inputStr, now = Date.now()) => {
-    let inputMoment = null;
-    for (const elem of calendar.map.entries()) {
-      const regExp = elem[0];
-      if (regExp.test(inputStr)) {
-        inputMoment = elem[1](inputStr, now);
-        break;
-      }
-    }
-    return inputMoment.diff(now, 'days');
-  }
-}, {
+const replacer = [calendarReplacer, {
   pattern: `(${kansuujiPattern}|[0-9０-９]+)日(後|ご|まえ|前)`,
   getRelative: (inputStr) => {
     let num = convertNum(inputStr);

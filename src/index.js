@@ -30,25 +30,43 @@ const getDate = (str = '', now = Date.now()) => {
     days: null,
     seconds: null
   };
+  const clearTmp = () => {
+    tmp.years = null;
+    tmp.days = null;
+    tmp.seconds = null;
+  };
   const pushRes = () => {
     let tmpNow = now;
     const date = moment(now);
     if (tmp.years) {
-      date.add(tmp.years.getRelative(tmp.years.elem, tmpNow), 'years');
+      const relative = tmp.years.getRelative(tmp.years.elem, tmpNow);
+      if (relative === null) {
+        clearTmp();
+        return;
+      }
+      date.add(relative, 'years');
       tmpNow = date.toDate().getTime();
     }
     if (tmp.days) {
-      date.add(tmp.days.getRelative(tmp.days.elem, tmpNow), 'days');
+      const relative = tmp.days.getRelative(tmp.days.elem, tmpNow);
+      if (relative === null) {
+        clearTmp();
+        return;
+      }
+      date.add(relative, 'days');
       tmpNow = date.toDate().getTime();
     }
     if (tmp.seconds) {
-      date.add(tmp.seconds.getRelative(tmp.seconds.elem, tmpNow), 'seconds');
+      const relative = tmp.seconds.getRelative(tmp.seconds.elem, tmpNow);
+      if (relative === null) {
+        clearTmp();
+        return;
+      }
+      date.add(relative, 'seconds');
       tmpNow = date.toDate().getTime();
     }
     res.push(date.toDate());
-    tmp.years = null;
-    tmp.days = null;
-    tmp.seconds = null;
+    clearTmp();
   };
   for (const elem of results) {
     if (elem.type === 'years') {

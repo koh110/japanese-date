@@ -12,9 +12,6 @@ const calendarMap = new Map([
   }],
   [/大晦日|おおみそか/, (str, now = Date.now()) => {
     return moment(now).set({ month: 11, date: 31 });
-  }],
-  [/元日|がんじつ/, (str, now = Date.now()) => {
-    return moment(now).set({ month: 0, date: 1 });
   }]
 ]);
 

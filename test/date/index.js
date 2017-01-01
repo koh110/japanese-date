@@ -35,7 +35,19 @@ test('check match pattern', (t) => {
     'クリスマスイブ': moment().set({ month: 11, date: 24 }).diff(nowMoment, 'days'),
     'クリスマス': moment().set({ month: 11, date: 25 }).diff(nowMoment, 'days'),
     '元日': moment().set({ month: 0, date: 1 }).diff(nowMoment, 'days'),
-    '成人の日': moment().set({ month: 0, date: 11 }).diff(nowMoment, 'days')
+    '成人の日': moment().set({ month: 0, date: 11 }).diff(nowMoment, 'days'),
+    '建国記念日': moment().set({ month: 1, date: 11 }).diff(nowMoment, 'days'),
+    '憲法記念日': moment().set({ month: 4, date: 3 }).diff(nowMoment, 'days'),
+    'みどりの日': moment().set({ month: 4, date: 4 }).diff(nowMoment, 'days'),
+    '昭和の日': moment().set({ month: 3, date: 29 }).diff(nowMoment, 'days'),
+    'こどもの日': moment().set({ month: 4, date: 5 }).diff(nowMoment, 'days'),
+    '海の日': moment().set({ month: 6, date: 18 }).diff(nowMoment, 'days'),
+    '山の日': moment().set({ month: 7, date: 11 }).diff(nowMoment, 'days'),
+    '敬老の日': moment().set({ month: 8, date: 19 }).diff(nowMoment, 'days'),
+    '体育の日': moment().set({ month: 9, date: 10 }).diff(nowMoment, 'days'),
+    '文化の日': moment().set({ month: 10, date: 3 }).diff(nowMoment, 'days'),
+    '勤労感謝の日': moment().set({ month: 10, date: 23 }).diff(nowMoment, 'days'),
+    '天皇誕生日': moment().set({ month: 11, date: 23 }).diff(nowMoment, 'days')
   };
   const today = moment();
   const yesterday = moment().add(-1, 'days');
