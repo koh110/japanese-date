@@ -2,7 +2,7 @@
 
 const moment = require('moment');
 
-const { createReplacer, addReplacer, patternMatch } = require('./lib');
+const { createReplacer, addReplacer, patternMatch } = require('jpdate-lib');
 const timeReplacer = createReplacer('seconds', require('./time').replacer);
 const dateReplacer = createReplacer('days', require('./date').replacer);
 const yearReplacer = createReplacer('years', require('./year').replacer);

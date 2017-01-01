@@ -12,7 +12,7 @@ test.afterEach((t) => {
   t.context.timer = sinon.restore();
 });
 
-const { createReplacer, addReplacer, patternMatch } = require('src/lib');
+const { createReplacer, addReplacer, patternMatch } = require('src/node_modules/jpdate-lib');
 const { replacer } = require('src/date');
 
 test('check match pattern', (t) => {

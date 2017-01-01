@@ -16,4 +16,4 @@ const getDateFromNthDay = (year, month, n, day, now = Date.now()) => {
   }
   return moment(now).set({ year: year, month: month, date: date });
 };
-exports.getDateFromNthDay = getDateFromNthDay;
+module.exports = getDateFromNthDay;

@@ -1,6 +1,6 @@
 'use strict';
 
-const { convertRegExpToPattern } = require('../../lib');
+const { convertRegExpToPattern } = require('jpdate-lib');
 const map = require('./map');
 
 const keyStrs = [...map.keys()].map((regExp) => {

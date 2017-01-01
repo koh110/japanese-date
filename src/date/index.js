@@ -1,8 +1,8 @@
 'use strict';
 
 const moment = require('moment');
-const { convertRegExpToPattern } = require('../lib');
-const { convertNum, kansuujiRegExp } = require('../util');
+const { convertRegExpToPattern } = require('jpdate-lib');
+const { convertNum, kansuujiRegExp } = require('jpdate-util');
 const kansuujiPattern = convertRegExpToPattern(kansuujiRegExp);
 
 const calendarReplacer = require('./calendar');
