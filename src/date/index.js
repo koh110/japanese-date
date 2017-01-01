@@ -1,74 +1,11 @@
 'use strict';
 
-const moment = require('moment');
-const { convertRegExpToPattern } = require('jpdate-lib');
-const { convertNum, kansuujiRegExp } = require('jpdate-util');
-const kansuujiPattern = convertRegExpToPattern(kansuujiRegExp);
+const calendar = require('./calendar');
+const dateNotation = require('./date-notation');
+const beforeAfter = require('./before-after');
+const month = require('./month');
 
-const calendarReplacer = require('./calendar');
-
-const replacer = [calendarReplacer, {
-  pattern: `(${kansuujiPattern}|[0-9０-９]+)日(後|ご|まえ|前)`,
-  getRelative: (inputStr) => {
-    let num = convertNum(inputStr);
-    if (/(まえ|前)/.test(inputStr)) {
-      num = num * (-1);
-    }
-    return num;
-  }
-}, {
-  pattern: [
-    `((${kansuujiPattern}|[0-9０-９]{4})(/|-|年))?`,
-    `(${kansuujiPattern}|[0-9０-９]{1,2})(/|-|月)`,
-    `(${kansuujiPattern}|[0-9０-９]{1,2})日?`
-  ].join(''),
-  getRelative: (inputStr, now = Date.now()) => {
-    const match = inputStr.match(/((.+)(\/|-|年))?(.+)(\/|-|月)(.+)日?/);
-    const nowMoment = moment(now);
-    let convert = convertNum(match[2]);
-    const year = convert ? convert : nowMoment.year();
-    convert = convertNum(match[4]);
-    const month = convert ? convert - 1 : nowMoment.month();
-    convert = convertNum(match[6]);
-    const date = convert ? convert : nowMoment.date();
-    const inputMoment = moment(now).set({
-      year: year,
-      month: month,
-      date: date
-    });
-    const diff = inputMoment.diff(now, 'days');
-    return diff;
-  }
-}, {
-  pattern: `((再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ)の)(${kansuujiPattern}|[0-9０-９]{1,2})日?`,
-  getRelative: (inputStr, now = Date.now()) => {
-    const numberRegExp = new RegExp(`${kansuujiPattern}|[0-9０-９]{1,2}`);
-    const match = inputStr.match(numberRegExp);
-    const date = convertNum(match[0]);
-    const inputMoment = moment(now).date(date);
-    const monthMatch = inputStr.match(/再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ/);
-    let add = 0;
-    if (monthMatch) {
-      switch (monthMatch[0]) {
-      case '来月':
-      case 'らいげつ':
-        add = 1;
-        break;
-      case '再来月':
-      case 'さらいげつ':
-        add = 2;
-        break;
-      case '先月':
-      case 'せんげつ':
-        add = -1;
-        break;
-      }
-    }
-    inputMoment.add(add, 'month');
-    const diff = inputMoment.diff(now, 'days');
-    return diff;
-  }
-}, {
+const replacer = [calendar, dateNotation, beforeAfter, month, {
   pattern: '((再?来週|先週|今週|さ?らいしゅう|せんしゅう|こんしゅう)の)?(日|月|火|水|木|金|土)曜日?',
   getRelative: (inputStr, now = Date.now()) => {
     const week = ['日', '月', '火', '水', '木', '金', '土'];

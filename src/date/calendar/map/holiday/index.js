@@ -2,7 +2,7 @@
 
 const moment = require('moment');
 
-const getDateFromNthDay = require('../getdatefromnthday');
+const getDateFromNthDay = require('../get-date-from-nth-day');
 const { spling: equinoxSpling, autumnal: equinoxAutumnal } = require('./equinox');
 
 const week = Object.freeze({
