@@ -2,7 +2,7 @@
 
 const test = require('ava').test;
 
-const { zenToHan, convertNum, kansuujiRegExp, kanjiToArabic } = require('src/util');
+const { zenToHan, convertNum, kansuujiRegExp, kanjiToArabic } = require('src/node_modules/jpdate-util');
 
 test('convertNum', (t) => {
   const data = new Map([

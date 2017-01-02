@@ -2,7 +2,7 @@
 
 const test = require('ava').test;
 
-const { createReplacer, addReplacer } = require('src/lib');
+const { createReplacer, addReplacer } = require('src/node_modules/jpdate-lib');
 
 test('createReplacer', (t) => {
   const type = 'test';

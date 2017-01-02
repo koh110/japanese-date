@@ -1,9 +1,8 @@
 'use strict';
 
 const moment = require('moment');
-const { convertNum, kansuujiRegExp } = require('../util');
-const kansuuji = kansuujiRegExp.toString();
-const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
+const { convertNum } = require('jpdate-util');
+const { kansuujiPattern } = require('jpdate-lib');
 
 const replacer = [{
   pattern: `(${kansuujiPattern}|[0-9０-９]+)(秒|分|時間半?)(後|ご|まえ|前)`,
@@ -26,7 +25,7 @@ const replacer = [{
 }, {
   pattern: '正午',
   getRelative: (inputStr, now = Date.now()) => {
-    const diff = moment({ hour: 12 }).diff(now, 'seconds');
+    const diff = moment(now).set({ hour: 12, minute: 0, seconds: 0 }).diff(now, 'seconds');
     return diff;
   }
 }, {
@@ -56,14 +55,10 @@ const replacer = [{
       dateObj.hour = hour + add;
     }
     const minute = convertNum(match[4]);
-    if (minute) {
-      dateObj.minute = minute;
-    }
+    dateObj.minute = minute ? minute : 0;
     const second = convertNum(match[6]);
-    if (second) {
-      dateObj.second = second;
-    }
-    const date = moment(dateObj).toDate();
+    dateObj.second = second ? second : 0;
+    const date = moment(now).set(dateObj).toDate();
     const num = (date.getTime() - now) / 1000;
 
     return num;

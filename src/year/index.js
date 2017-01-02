@@ -1,9 +1,9 @@
 'use strict';
 
 const moment = require('moment');
-const { convertNum, kansuujiRegExp } = require('../util');
-const kansuuji = kansuujiRegExp.toString();
-const kansuujiPattern = kansuuji.slice(1, kansuuji.length - 2);
+
+const { convertNum } = require('jpdate-util');
+const { kansuujiPattern } = require('jpdate-lib');
 
 const replacer = [{
   pattern: `(${kansuujiPattern}|[0-9０-９]+)年(後|ご|まえ|前)`,
