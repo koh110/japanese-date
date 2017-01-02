@@ -103,6 +103,7 @@ test('getDate', (t) => {
     '来週の水曜日': moment(now).add(5, 'days'),
     '先週の月曜日': moment(now).add(-11, 'days'),
     '来月の11日': moment(now).add(1, 'month').date(11),
+    '来月の第三金曜日': moment(now).add(1, 'month').date(19),
     '明日の正午': moment({ hour: 12 }).add(1, 'days').hours(12),
     '来年の大晦日': moment(now).set({ month: 11, date: 31 }).add(1, 'years'),
     '去年のクリスマスイブ': moment(now).set({ month: 11, date: 24 }).add(-1, 'years'),
