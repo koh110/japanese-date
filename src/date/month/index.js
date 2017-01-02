@@ -2,21 +2,32 @@
 
 // 今月/先月...のパターン
 
-const { kansuujiPattern, convertRegExpToPattern } = require('jpdate-lib');
+const { kansuujiPattern } = require('jpdate-lib');
 const { convertNum } = require('jpdate-util');
 const moment = require('moment');
 
-const monthRegExp = /(再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ)/;
-const monthPattern = convertRegExpToPattern(monthRegExp);
+const monthPattern = '(再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ)';
+const monthRegExp = new RegExp(monthPattern);
+
 const hinichiPattern = `(${kansuujiPattern}|[0-9０-９]+)日?`;
 const hinichiRegExp = new RegExp(hinichiPattern);
 
+const japaneseRelativeDates = require('../japanese-relative-dates');
+const japaneseRelativeDatesRegExp = new RegExp(japaneseRelativeDates.pattern);
+
 module.exports = {
-  pattern: `(${monthPattern}の)${hinichiPattern}`,
+  pattern: `(${monthPattern}の)(${hinichiPattern}|${japaneseRelativeDates.pattern})`,
   getRelative: (inputStr, now = Date.now()) => {
-    const dateMatch = inputStr.match(hinichiRegExp);
-    const date = convertNum(dateMatch[1]);
-    const inputMoment = moment(now).date(date);
+    const inputMoment = moment(now);
+    if (japaneseRelativeDatesRegExp.test(inputStr)) {
+      const relative = japaneseRelativeDates.getRelative(inputStr);
+      inputMoment.add(relative, 'days');
+    } else {
+      const dateMatch = inputStr.match(hinichiRegExp);
+      const date = convertNum(dateMatch[1]);
+      inputMoment.date(date);
+    }
+
     const monthMatch = inputStr.match(monthRegExp);
     let add = 0;
     if (monthMatch) {

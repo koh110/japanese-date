@@ -4,6 +4,7 @@ const calendar = require('./calendar');
 const dateNotation = require('./date-notation');
 const beforeAfter = require('./before-after');
 const month = require('./month');
+const jpRelativeDates = require('./japanese-relative-dates');
 
 const replacer = [calendar, dateNotation, beforeAfter, month, {
   pattern: '((再?来週|先週|今週|さ?らいしゅう|せんしゅう|こんしゅう)の)?(日|月|火|水|木|金|土)曜日?',
@@ -32,36 +33,6 @@ const replacer = [calendar, dateNotation, beforeAfter, month, {
     }
     return add;
   }
-}, {
-  pattern: '今日|きょう',
-  getRelative: (inputStr) => {
-    return 0;
-  }
-}, {
-  pattern: '明日|あした|あす|みょうじつ|翌日|よくじつ',
-  getRelative: (inputStr) => {
-    return 1;
-  }
-}, {
-  pattern: '明々後日|しあさって',
-  getRelative: (inputStr) => {
-    return 3;
-  }
-}, {
-  pattern: '明後日|あさって',
-  getRelative: (inputStr) => {
-    return 2;
-  }
-}, {
-  pattern: '一昨日|おととい',
-  getRelative: (inputStr) => {
-    return -2;
-  }
-}, {
-  pattern: '昨日|きのう|さくじつ',
-  getRelative: (inputStr) => {
-    return -1;
-  }
-}];
+}, jpRelativeDates];
 
 exports.replacer = replacer;

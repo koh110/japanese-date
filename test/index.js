@@ -91,7 +91,7 @@ test('getDate', (t) => {
     '2015年の1月23日': moment(now).add(-1, 'years').add(1, 'days'),
     '明日の一時間後': moment(now).add(1, 'days').add(1, 'hours'),
     '来年のきょう': moment(now).add(1, 'years'),
-    // '来月のきょう': moment(now).add(1, 'months'),
+    '来月の明日': moment(now).add(1, 'months').add(1, 'days'),
     '一年前の十日後': moment(now).add(-1, 'years').add(10, 'days'),
     '2年後の21日前': moment(now).add(2, 'years').add(-21, 'days'),
     '３年後': moment(now).add(3, 'years'),
