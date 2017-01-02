@@ -32,6 +32,7 @@ test('check match pattern', (t) => {
     '先月の3日': moment().add(-1, 'month').date(3).diff(nowMoment, 'days'),
     '先月の昨日': moment().add(-1, 'month').add(-1, 'days').diff(nowMoment, 'days'),
     'こんげつの11日': moment().date(11).diff(nowMoment, 'days'),
+    '今月の第二木曜日': moment().date(14).diff(nowMoment, 'days'),
     '大晦日': moment().set({ month: 11, date: 31 }).diff(nowMoment, 'days'),
     'クリスマスイブ': moment().set({ month: 11, date: 24 }).diff(nowMoment, 'days'),
     'クリスマス': moment().set({ month: 11, date: 25 }).diff(nowMoment, 'days'),
