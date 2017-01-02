@@ -2,9 +2,9 @@
 
 // 今月/先月...のパターン
 
-const { kansuujiPattern, convertRegExpToPattern } = require('jpdate-lib');
+const { kansuujiPattern } = require('jpdate-lib');
 const { convertNum } = require('jpdate-util');
-const { dayRegExp, getDayFromStr } = require('day-utils');
+const { dayPattern, dayRegExp, getDayFromStr } = require('day-utils');
 const getMomentFromNthDay = require('get-moment-from-nth-day');
 const moment = require('moment');
 
@@ -16,9 +16,6 @@ const hinichiRegExp = new RegExp(hinichiPattern);
 
 const japaneseRelativeDates = require('../japanese-relative-dates');
 const japaneseRelativeDatesRegExp = new RegExp(japaneseRelativeDates.pattern);
-
-// 第[0-9]o曜日のパターン
-const dayPattern = convertRegExpToPattern(dayRegExp);
 
 module.exports = {
   pattern: `(${monthPattern}の)(${dayPattern}|${hinichiPattern}|${japaneseRelativeDates.pattern})`,
