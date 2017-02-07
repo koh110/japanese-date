@@ -3,6 +3,7 @@
 const moment = require('moment');
 const { convertNum } = require('jpdate-util');
 const { kansuujiPattern } = require('jpdate-lib');
+const { beforeAfterPattern, beforeAfterRegExp } = require('date-utils');
 
 const replacer = [{
   pattern: `(${kansuujiPattern}|[0-9０-９]+)(秒|分|時間半?)(後|ご|まえ|前)`,
@@ -41,7 +42,8 @@ const replacer = [{
     '(午前|ごぜん|午後|ごご)?',
     `(${kansuujiPattern}|[0-9０-９]{1,2})時`,
     `((${kansuujiPattern}|[0-9０-９]{1,2})分)?`,
-    `((${kansuujiPattern}|[0-9０-９]{1,2})秒)?`
+    `((${kansuujiPattern}|[0-9０-９]{1,2})秒)?`,
+    `(の${beforeAfterPattern})?`
   ].join(''),
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)時)?((.+)分)?((.+)秒)?/);
@@ -58,8 +60,19 @@ const replacer = [{
     dateObj.minute = minute ? minute : 0;
     const second = convertNum(match[6]);
     dateObj.second = second ? second : 0;
-    const date = moment(now).set(dateObj).toDate();
-    const num = (date.getTime() - now) / 1000;
+    const inputMoment = moment(now).set(dateObj);
+
+    // 何日前/後の指定がされていたら
+    const beforeAfter = inputStr.match(beforeAfterRegExp);
+    if (beforeAfter) {
+      let num = convertNum(beforeAfter[1]);
+      if (/(まえ|前)/.test(inputStr)) {
+        num = num * (-1);
+      }
+      inputMoment.add(num, 'days');
+    }
+
+    const num = (inputMoment.toDate().getTime() - now) / 1000;
 
     return num;
   }

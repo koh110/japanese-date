@@ -2,11 +2,9 @@
 
 // 何日前/後のパターン
 
-const { kansuujiPattern } = require('jpdate-lib');
-const { convertNum } = require('jpdate-util');
+const { beforeAfterPattern, beforeAfterRegExp } = require('date-utils');
 
-const beforeAfterPattern = `(${kansuujiPattern}|[0-9０-９]+)日(後|ご|まえ|前)`;
-const beforeAfterRegExp = new RegExp(beforeAfterPattern);
+const { convertNum } = require('jpdate-util');
 
 module.exports = {
   pattern: `${beforeAfterPattern}`,
