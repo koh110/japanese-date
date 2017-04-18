@@ -27,7 +27,9 @@ test('check match pattern', (t) => {
     '十壱時半': moment({ hour: 11, minute: 30 }).diff(nowMoment, 'seconds'),
     '十時二十分三十五秒': moment({ hour: 10, minute: 20, second: 35 }).diff(nowMoment, 'seconds'),
     '正午': moment({ hour: 12, minute: 0, second: 0 }).diff(nowMoment, 'seconds'),
-    '午後三時拾五分': moment({ hour: 15, minute: 15, second: 0 }).diff(nowMoment, 'seconds')
+    '午後三時拾五分': moment({ hour: 15, minute: 15, second: 0 }).diff(nowMoment, 'seconds'),
+    '10:23': moment({ hour: 10, minute: 23, second: 0 }).diff(nowMoment, 'seconds'),
+    '12:34:56': moment({ hour: 12, minute: 34, second: 56 }).diff(nowMoment, 'seconds')
   };
 
   const inputStrs = Object.keys(inputs);

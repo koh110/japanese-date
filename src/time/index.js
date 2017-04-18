@@ -24,6 +24,16 @@ const replacer = [{
     return num;
   }
 }, {
+  pattern: '[0-2０-２][0-9０-９]:[0-5０-５][0-9０-９](:[0-5０-５][0-9０-９])?',
+  getRelative: (inputStr, now = Date.now()) => {
+    const splitChars = inputStr.split(':');
+    const hour = splitChars[0];
+    const minute = splitChars[1];
+    const seconds = splitChars[2] ? splitChars[2] : 0;
+    const diff = moment(now).set({ hour, minute, seconds }).diff(now, 'seconds');
+    return diff;
+  }
+}, {
   pattern: '正午',
   getRelative: (inputStr, now = Date.now()) => {
     const diff = moment(now).set({ hour: 12, minute: 0, seconds: 0 }).diff(now, 'seconds');

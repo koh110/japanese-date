@@ -138,7 +138,8 @@ test('getDate', (t) => {
     '2015年の春分の日': moment(now).set({ year: 2015, month: 2, date: 21 }),
     '2015年の秋分の日': moment(now).set({ year: 2015, month: 8, date: 23 }),
     '6月21日の60日後': moment(now).set({ month: 5, date: 21 }).add(60, 'days'),
-    '6月21日の10時の60日後': moment(now).set({ month: 5, date: 21, hour: 10, minute: 0, second: 0 }).add(60, 'days')
+    '6月21日の10時の60日後': moment(now).set({ month: 5, date: 21, hour: 10, minute: 0, second: 0 }).add(60, 'days'),
+    '明日の11:52': moment(now).add(1, 'days').set({ hour: 11, minute: 52, second: 0 })
   };
   const keys = Object.keys(obj);
   const inputStr = keys.join(',');
