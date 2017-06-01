@@ -24,7 +24,7 @@ const replacer = [{
     return num;
   }
 }, {
-  pattern: '[0-2０-２][0-9０-９]:[0-5０-５][0-9０-９](:[0-5０-５][0-9０-９])?',
+  pattern: '[0-2０-２]?[0-9０-９]:[0-5０-５][0-9０-９](:[0-5０-５][0-9０-９])?',
   getRelative: (inputStr, now = Date.now()) => {
     const splitChars = inputStr.split(':');
     const hour = splitChars[0];

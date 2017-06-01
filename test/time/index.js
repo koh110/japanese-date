@@ -28,6 +28,7 @@ test('check match pattern', (t) => {
     '十時二十分三十五秒': moment({ hour: 10, minute: 20, second: 35 }).diff(nowMoment, 'seconds'),
     '正午': moment({ hour: 12, minute: 0, second: 0 }).diff(nowMoment, 'seconds'),
     '午後三時拾五分': moment({ hour: 15, minute: 15, second: 0 }).diff(nowMoment, 'seconds'),
+    '9:12:04': moment({ hour: 9, minute: 12, second: 4 }).diff(nowMoment, 'seconds'),
     '10:23': moment({ hour: 10, minute: 23, second: 0 }).diff(nowMoment, 'seconds'),
     '12:34:56': moment({ hour: 12, minute: 34, second: 56 }).diff(nowMoment, 'seconds')
   };
