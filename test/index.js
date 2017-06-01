@@ -11,7 +11,7 @@ test.beforeEach((t) => {
   t.context.timer = sinon.useFakeTimers(now.toDate().getTime(), 'Date');
 });
 test.afterEach((t) => {
-  t.context.timer = sinon.restore();
+  t.context.timer.restore();
 });
 
 test('match', (t) => {

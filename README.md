@@ -45,7 +45,7 @@ const match = require('japanese-date').match('来年の昨日の10秒後');
 
 ```
 // 実行日: 2016-11-24T15:22:02.451Z
-const match = require('japanese-date')('来年の昨日の10秒後');
+const match = require('japanese-date').getDate('来年の昨日の10秒後');
 [ 2017-11-23T15:18:48.514Z ]
 ```
 

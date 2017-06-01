@@ -9,7 +9,7 @@ test.beforeEach((t) => {
   t.context.timer = sinon.useFakeTimers(now.toDate().getTime(), 'Date');
 });
 test.afterEach((t) => {
-  t.context.timer = sinon.restore();
+  t.context.timer.restore();
 });
 
 const { createReplacer, addReplacer, patternMatch } = require('src/node_modules/jpdate-lib');
