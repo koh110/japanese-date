@@ -26,10 +26,10 @@
   },
   "devDependencies": {
     "ava": "^0.19.1",
-    "eslint": "^3.19.0",
-    "sinon": "^2.3.2"
+    "eslint": "^5.7.0",
+    "sinon": "^7.0.0"
   },
   "dependencies": {
-    "moment": "^2.18.1"
+    "moment": "^2.22.2"
   }
 }
