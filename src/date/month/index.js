@@ -18,7 +18,7 @@ const japaneseRelativeDates = require('../japanese-relative-dates');
 const japaneseRelativeDatesRegExp = new RegExp(japaneseRelativeDates.pattern);
 
 module.exports = {
-  pattern: `(${monthPattern}の)(${dayPattern}|${hinichiPattern}|${japaneseRelativeDates.pattern})`,
+  pattern: `(${monthPattern}の?)(${dayPattern}|${hinichiPattern}|${japaneseRelativeDates.pattern})`,
   getRelative: (inputStr, now = Date.now()) => {
     const monthMatch = inputStr.match(monthRegExp);
     let add = 0;

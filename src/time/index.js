@@ -40,7 +40,7 @@ const replacer = [{
     return diff;
   }
 }, {
-  pattern: `(${kansuujiPattern}|[0-9０-９]{2})時半`,
+  pattern: `(${kansuujiPattern}|[0-9０-９]{1,2})時半`,
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)時)/);
     const hour = convertNum(match[2]);

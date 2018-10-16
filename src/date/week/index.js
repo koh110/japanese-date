@@ -3,7 +3,7 @@
 const { dayPattern, getDayFromStr } = require('day-utils');
 
 module.exports = {
-  pattern: `((再?来週|先週|今週|さ?らいしゅう|せんしゅう|こんしゅう)の)?${dayPattern}`,
+  pattern: `((再?来週|先週|今週|さ?らいしゅう|せんしゅう|こんしゅう)の?)?${dayPattern}`,
   getRelative: (inputStr, now = Date.now()) => {
     const nowDay = new Date(now).getDay();
     const matchDay = getDayFromStr(inputStr);

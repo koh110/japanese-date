@@ -13,7 +13,7 @@ module.exports = {
     `((${kansuujiPattern}|[0-9０-９]{4})(/|-|年))?`,
     `(${kansuujiPattern}|[0-9０-９]{1,2})(/|-|月)`,
     `(${kansuujiPattern}|[0-9０-９]{1,2})日?`,
-    `(の${beforeAfterPattern})?`
+    `(の?${beforeAfterPattern})?`
   ].join(''),
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)(\/|-|年))?(.+)(\/|-|月)(.+)日?/);
