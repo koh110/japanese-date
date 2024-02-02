@@ -6,16 +6,14 @@
 
 # Installation
 
-```
-npm install japanese-date
+```shell
+$ npm install japanese-date
 ```
 
 # Usage
-Node.js v6以上で動きます。  
-babelを通せば多分フロントエンドでも動きます。  
 
-```
-const jpdate = require('japanese-date');
+```javascript
+import { match, getDate } from 'japanese-date';
 ```
 
 # api
@@ -24,8 +22,9 @@ const jpdate = require('japanese-date');
 
 入力した日本語から日本語の日時表現にマッチした情報をarrayとして返します。
 
-```
-const match = require('japanese-date').match('来年の昨日の10秒後');
+```javascript
+import { match } from 'japanese-date';
+const matched = match('来年の昨日の10秒後');
 [{
   index: 0, // matchした先頭のindex
   elem: '来年', // matchした文字列
@@ -43,16 +42,22 @@ const match = require('japanese-date').match('来年の昨日の10秒後');
 入力した日本語から日付のオブジェクトを配列で返します。  
 入力された文字の先頭から年/日付/時間を取得し、その最短の組み合わせを計算したものを返します。  
 
-```
+```javascript
 // 実行日: 2016-11-24T15:22:02.451Z
-const match = require('japanese-date').getDate('来年の昨日の10秒後');
+import { getDate } from 'japanese-date';
+const matched = getDate('来年の昨日の10秒後');
 [ 2017-11-23T15:18:48.514Z ]
 ```
 
 # sample
 
+```shell
+$ npm run build
+$ node sample.mjs
 ```
-const jpdate = require('japanese-date');
+
+```javascript
+import * as jpdate from 'japanese-date';
 const match = jpdate.match('来年の昨日');
 // [ { index: 0, elem: '来年', relative: 1, type: 'years' },
 //   { index: 3, elem: '昨日', relative: -1, type: 'days' } ]
@@ -62,8 +67,8 @@ console.log(date);
 ```
 
 ## 入力パターン例
-```
-const jpdate = require('japanese-date');
+```javascript
+import * as jpdate from 'japanese-date';
 const patterns = [
   '50分後',
   '10時半',
@@ -95,7 +100,6 @@ const patterns = [
 for (const pattern of patterns) {
   console.log(jpdate.getDate(pattern));
 }
-
 ```
 
 # License
