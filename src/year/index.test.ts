@@ -1,10 +1,10 @@
 import { test, expect, vi, beforeEach, afterEach } from 'vitest'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { createReplacer, addReplacer, patternMatch } from '../lib/jpdate-lib/index.js';
 import { replacer } from './index.js';
 
 beforeEach(() => {
-  const now = moment('2016-01-22 01:23:45');
+  const now = dayjs('2016-01-22 01:23:45');
   vi.useFakeTimers();
   vi.setSystemTime(now.toDate());
 });
@@ -19,7 +19,7 @@ test('check match pattern', () => {
     '去年': -1, '一昨年': -2,
     '一年後': 1, '二十年前': -20
   };
-  const next = moment().add(1, 'years');
+  const next = dayjs().add(1, 'years');
   // YYYY/MM/DD
   inputs[next.format('YYYY年')] = 1;
 

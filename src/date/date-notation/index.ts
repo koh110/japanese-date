@@ -1,5 +1,5 @@
 import type { RelativeReplacer } from '../../type.js'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { kansuujiPattern } from '../../lib/jpdate-lib/index.js'
 import { convertNum } from '../../lib/jpdate-util/index.js'
 import { beforeAfterPattern, beforeAfterRegExp } from '../../lib/date-utils/index.js';
@@ -18,19 +18,21 @@ const replacer: RelativeReplacer = {
     if (!match) {
       return null
     }
-    const nowMoment = moment(now);
+    const nowInstance = dayjs(now).hour(0).minute(0).second(0);
     let convert = convertNum(match[2]);
-    const year = convert ? convert : nowMoment.year();
+    const year = convert ? convert : nowInstance.year();
     convert = convertNum(match[4]);
-    const month = convert ? convert - 1 : nowMoment.month();
+    const month = convert ? convert - 1 : nowInstance.month();
     convert = convertNum(match[6]);
-    const date = convert ? convert : nowMoment.date();
+    const date = convert ? convert : nowInstance.date();
 
-    const inputMoment = moment(now).set({
-      year: year,
-      month: month,
-      date: date
-    });
+    let inputInstance = dayjs(now)
+      .year(year)
+      .month(month)
+      .date(date)
+      .hour(0)
+      .minute(0)
+      .second(0)
 
     // 何日前/後の指定がされていたら
     const beforeAfter = inputStr.match(beforeAfterRegExp);
@@ -42,10 +44,10 @@ const replacer: RelativeReplacer = {
       if (/(まえ|前)/.test(inputStr)) {
         num = num * (-1);
       }
-      inputMoment.add(num, 'days');
+      inputInstance = inputInstance.add(num, 'days');
     }
 
-    const diff = inputMoment.diff(now, 'days');
+    const diff = inputInstance.diff(nowInstance, 'days');
     return diff;
   }
 };

@@ -1,5 +1,5 @@
 import type { RelativeReplacer } from '../type.js'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { convertNum } from '../lib/jpdate-util/index.js';
 import { kansuujiPattern } from '../lib/jpdate-lib/index.js';
 import { beforeAfterPattern, beforeAfterRegExp } from '../lib/date-utils/index.js';
@@ -31,18 +31,20 @@ export const replacer: RelativeReplacer[] = [{
 }, {
   pattern: '[0-2０-２]?[0-9０-９]:[0-5０-５][0-9０-９](:[0-5０-５][0-9０-９])?',
   getRelative: (inputStr, now = Date.now()) => {
-    const [hour, minute, _seconds] = inputStr.split(':');
-    if (!hour || !minute) {
+    const [_hour, _minute, _seconds] = inputStr.split(':');
+    if (!_hour || !_minute) {
       return null;
     }
+    const hour = Number(_hour)
+    const minute = Number(_minute)
     const seconds = _seconds ? Number(_seconds) : 0;
-    const diff = moment(now).set({ hour: Number(hour), minute: Number(minute), seconds }).diff(now, 'seconds');
+    const diff = dayjs(now).hour(hour).minute(minute).second(seconds).diff(now, 'seconds');
     return diff;
   }
 }, {
   pattern: '正午',
   getRelative: (inputStr, now = Date.now()) => {
-    const diff = moment(now).set({ hour: 12, minute: 0, seconds: 0 }).diff(now, 'seconds');
+    const diff = dayjs(now).hour(12).minute(0).second(0).diff(now, 'seconds');
     return diff;
   }
 }, {
@@ -56,7 +58,7 @@ export const replacer: RelativeReplacer[] = [{
     if (!hour) {
       return null;
     }
-    const diff = moment({ hour: hour, minute: 30 }).diff(now, 'seconds');
+    const diff = dayjs(now).hour(hour).minute(30).second(0).diff(now, 'seconds');
     return diff;
   }
 }, {
@@ -72,20 +74,19 @@ export const replacer: RelativeReplacer[] = [{
     if (!match) {
       return null;
     }
-    const dateObj: moment.MomentSetObject = {};
+    let inputInstance = dayjs(now);
     const hour = convertNum(match[2]);
     if (hour) {
       let add = 0;
       if (/午後|ごご/.test(inputStr) && hour <= 12) {
         add = 12;
       }
-      dateObj.hour = hour + add;
+      inputInstance = inputInstance.hour(hour + add);
     }
     const minute = convertNum(match[4]);
-    dateObj.minute = minute ? minute : 0;
+    inputInstance = inputInstance.minute(minute ? minute : 0);
     const second = convertNum(match[6]);
-    dateObj.second = second ? second : 0;
-    const inputMoment = moment(now).set(dateObj);
+    inputInstance = inputInstance.second(second ? second : 0);
 
     // 何日前/後の指定がされていたら
     const beforeAfter = inputStr.match(beforeAfterRegExp);
@@ -97,10 +98,10 @@ export const replacer: RelativeReplacer[] = [{
       if (/(まえ|前)/.test(inputStr)) {
         num = num * (-1);
       }
-      inputMoment.add(num, 'days');
+      inputInstance = inputInstance.add(num, 'days');
     }
 
-    const num = (inputMoment.toDate().getTime() - now) / 1000;
+    const num = (inputInstance.toDate().getTime() - now) / 1000;
 
     return num;
   }

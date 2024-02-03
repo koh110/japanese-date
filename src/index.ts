@@ -1,5 +1,4 @@
-import moment from 'moment';
-
+import dayjs from 'dayjs';
 import { createReplacer, addReplacer, patternMatch } from './lib/jpdate-lib/index.js';
 import { replacer as _timeReplacer } from './time/index.js'
 import { replacer as _dateReplacer } from './date/index.js'
@@ -43,32 +42,34 @@ export const getDate = (str = '', now = Date.now()) => {
   };
   const pushRes = () => {
     let tmpNow = now;
-    const date = moment(now);
+    let date = dayjs(now).hour(0).minute(0).second(0);
     if (tmp.years) {
-      const relative = tmp.years.getRelative(tmp.years.elem, tmpNow);
+      const relative = tmp.years.getRelative(tmp.years.elem, date.toDate().getTime());
       if (relative === null) {
         clearTmp();
         return;
       }
-      date.add(relative, 'years');
+      date = date.add(relative, 'years');
       tmpNow = date.toDate().getTime();
     }
     if (tmp.days) {
-      const relative = tmp.days.getRelative(tmp.days.elem, tmpNow);
+      const relative = tmp.days.getRelative(tmp.days.elem, date.toDate().getTime());
       if (relative === null) {
         clearTmp();
         return;
       }
-      date.add(relative, 'days');
+      date = date.add(relative, 'days');
       tmpNow = date.toDate().getTime();
     }
     if (tmp.seconds) {
-      const relative = tmp.seconds.getRelative(tmp.seconds.elem, tmpNow);
+      const _now = dayjs(now)
+      const _date = date.hour(_now.hour()).minute(_now.minute()).second(_now.second());
+      const relative = tmp.seconds.getRelative(tmp.seconds.elem, _date.toDate().getTime());
       if (relative === null) {
         clearTmp();
         return;
       }
-      date.add(relative, 'seconds');
+      date = _date.add(relative, 'seconds');
       tmpNow = date.toDate().getTime();
     }
     res.push(date.toDate());

@@ -1,10 +1,10 @@
 import { test, expect, vi, beforeEach, afterEach } from 'vitest'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { createReplacer, addReplacer, patternMatch } from '../lib/jpdate-lib/index.js'
 import { replacer } from './index.js';
 
 beforeEach(() => {
-  const now = moment('2016-01-22 01:23:45');
+  const now = dayjs().year(2016).month(0).date(22).hour(1).minute(23).second(45);
   vi.useFakeTimers();
   vi.setSystemTime(now.toDate());
 });
@@ -14,8 +14,7 @@ afterEach(() => {
 
 test('check match pattern', () => {
   const { pattern, map } = addReplacer([createReplacer('days', replacer)]);
-  const now = Date.now();
-  const nowMoment = moment(now);
+  const now = dayjs(Date.now());
   const inputs = {
     '今日': 0, 'きょう': 0, '明日': 1, 'みょうじつ': 1, 'あした': 1,
     '翌日': 1, 'よくじつ': 1,
@@ -24,35 +23,35 @@ test('check match pattern', () => {
     '1日前': -1, '２日後': 2, '十日まえ': -10,
     '火曜日': -3, '来週の火曜日': 4, '先週の火曜日': -10, '再来週の水曜日': 12,
     '10日後': 10, '二十三日前': -23,
-    '来月の11日': moment().add(1, 'month').date(11).diff(nowMoment, 'days'),
-    '再来月の23日': moment().add(2, 'month').date(23).diff(nowMoment, 'days'),
-    '先月の3日': moment().add(-1, 'month').date(3).diff(nowMoment, 'days'),
-    '先月の昨日': moment().add(-1, 'month').add(-1, 'days').diff(nowMoment, 'days'),
-    'こんげつの11日': moment().date(11).diff(nowMoment, 'days'),
-    '今月の第二木曜日': moment().date(14).diff(nowMoment, 'days'),
-    '大晦日': moment().set({ month: 11, date: 31 }).diff(nowMoment, 'days'),
-    'クリスマスイブ': moment().set({ month: 11, date: 24 }).diff(nowMoment, 'days'),
-    'クリスマス': moment().set({ month: 11, date: 25 }).diff(nowMoment, 'days'),
-    '元日': moment().set({ month: 0, date: 1 }).diff(nowMoment, 'days'),
-    '成人の日': moment().set({ month: 0, date: 11 }).diff(nowMoment, 'days'),
-    '建国記念日': moment().set({ month: 1, date: 11 }).diff(nowMoment, 'days'),
-    '憲法記念日': moment().set({ month: 4, date: 3 }).diff(nowMoment, 'days'),
-    'みどりの日': moment().set({ month: 4, date: 4 }).diff(nowMoment, 'days'),
-    '昭和の日': moment().set({ month: 3, date: 29 }).diff(nowMoment, 'days'),
-    'こどもの日': moment().set({ month: 4, date: 5 }).diff(nowMoment, 'days'),
-    '海の日': moment().set({ month: 6, date: 18 }).diff(nowMoment, 'days'),
-    '山の日': moment().set({ month: 7, date: 11 }).diff(nowMoment, 'days'),
-    '敬老の日': moment().set({ month: 8, date: 19 }).diff(nowMoment, 'days'),
-    '体育の日': moment().set({ month: 9, date: 10 }).diff(nowMoment, 'days'),
-    '文化の日': moment().set({ month: 10, date: 3 }).diff(nowMoment, 'days'),
-    '勤労感謝の日': moment().set({ month: 10, date: 23 }).diff(nowMoment, 'days'),
-    '天皇誕生日': moment().set({ month: 11, date: 23 }).diff(nowMoment, 'days'),
-    '春分の日': moment().set({ month: 2, date: 20 }).diff(nowMoment, 'days'),
-    '秋分の日': moment().set({ month: 8, date: 22 }).diff(nowMoment, 'days')
+    '来月の11日': dayjs(now).add(1, 'month').date(11).hour(0).minute(0).second(0).diff(now, 'days'),
+    '再来月の23日': dayjs(now).add(2, 'month').date(23).hour(0).minute(0).second(0).diff(now, 'days'),
+    '先月の3日': dayjs(now).add(-1, 'month').date(3).hour(0).minute(0).second(0).diff(now, 'days'),
+    '先月の昨日': dayjs(now).add(-1, 'month').add(-1, 'days').hour(0).minute(0).second(0).diff(now, 'days'),
+    'こんげつの11日': dayjs(now).date(11).hour(0).minute(0).second(0).diff(now, 'days'),
+    '今月の第二木曜日': dayjs(now).date(14).hour(0).minute(0).second(0).diff(now, 'days'),
+    '大晦日': dayjs(now).month(11).date(31).hour(0).minute(0).second(0).diff(now, 'days'),
+    'クリスマスイブ': dayjs(now).month(11).date(24).hour(0).minute(0).second(0).diff(now, 'days'),
+    'クリスマス': dayjs(now).month(11).date(25).hour(0).minute(0).second(0).diff(now, 'days'),
+    '元日': dayjs(now).month(0).date(1).hour(0).minute(0).second(0).diff(now, 'days'),
+    '成人の日': dayjs(now).month(0).date(11).hour(0).minute(0).second(0).diff(now, 'days'),
+    '建国記念日': dayjs(now).month(1).date(11).hour(0).minute(0).second(0).diff(now, 'days'),
+    '憲法記念日': dayjs(now).month(4).date(3).hour(0).minute(0).second(0).diff(now, 'days'),
+    'みどりの日': dayjs(now).month(4).date(4).hour(0).minute(0).second(0).diff(now, 'days'),
+    '昭和の日': dayjs(now).month(3).date(29).hour(0).minute(0).second(0).diff(now, 'days'),
+    'こどもの日': dayjs(now).month(4).date(5).hour(0).minute(0).second(0).diff(now, 'days'),
+    '海の日': dayjs(now).month(6).date(18).hour(0).minute(0).second(0).diff(now, 'days'),
+    '山の日': dayjs(now).month(7).date(11).hour(0).minute(0).second(0).diff(now, 'days'),
+    '敬老の日': dayjs(now).month(8).date(19).hour(0).minute(0).second(0).diff(now, 'days'),
+    '体育の日': dayjs(now).month(9).date(10).hour(0).minute(0).second(0).diff(now, 'days'),
+    '文化の日': dayjs(now).month(10).date(3).hour(0).minute(0).second(0).diff(now, 'days'),
+    '勤労感謝の日': dayjs(now).month(10).date(23).hour(0).minute(0).second(0).diff(now, 'days'),
+    '天皇誕生日': dayjs(now).month(11).date(23).hour(0).minute(0).second(0).diff(now, 'days'),
+    '春分の日': dayjs(now).month(2).date(20).hour(0).minute(0).second(0).diff(now, 'days'),
+    '秋分の日': dayjs(now).month(8).date(22).hour(0).minute(0).second(0).diff(now, 'days')
   };
-  const today = moment();
-  const yesterday = moment().add(-1, 'days');
-  const tomorrow = moment().add(1, 'days');
+  const today = dayjs(now);
+  const yesterday = dayjs(now).add(-1, 'days');
+  const tomorrow = dayjs(now).add(1, 'days');
   // 日付形式
   // YYYY/MM/DD
   inputs[today.format('YYYY/MM/DD')] = 0;
@@ -67,9 +66,8 @@ test('check match pattern', () => {
 
   const inputStrs = Object.keys(inputs);
   const matched = patternMatch(inputStrs.join(''), pattern, map);
-  for (const entry of matched.entries()) {
-    const match = entry[1];
-    expect(match.getRelative(match.elem, now)).toStrictEqual(inputs[match.elem]);
+  for (const [, match] of matched.entries()) {
+    expect(match.getRelative(match.elem, now.toDate().getTime())).toStrictEqual(inputs[match.elem]);
   }
   // '全てのパターンにmatchしている'
   expect(matched.length).toStrictEqual(inputStrs.length);

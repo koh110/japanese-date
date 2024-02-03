@@ -1,5 +1,5 @@
 import type { DateReplacer } from '../../../type.js';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const calendarMap = new Map<RegExp, DateReplacer>([
   [/クリスマス(イブ)?/, (str, now = Date.now()) => {
@@ -7,10 +7,10 @@ const calendarMap = new Map<RegExp, DateReplacer>([
     if (/イブ/.test(str)) {
       date = 24;
     }
-    return moment(now).set({ month: 11, date: date });
+    return dayjs(now).month(11).date(date).hour(0).minute(0).second(0);
   }],
   [/大晦日|おおみそか/, (str, now = Date.now()) => {
-    return moment(now).set({ month: 11, date: 31 });
+    return dayjs(now).month(11).date(31).hour(0).minute(0).second(0);
   }]
 ]);
 export default calendarMap;

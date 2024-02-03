@@ -1,6 +1,6 @@
 // 今月/先月...のパターン
 import type { RelativeReplacer } from '../../type.js'
-import moment from 'moment';
+import dayjs from 'dayjs'
 import { kansuujiPattern } from '../../lib/jpdate-lib/index.js'
 import { convertNum } from '../../lib/jpdate-util/index.js';
 import { dayPattern, dayRegExp, getDayFromStr } from '../../lib/day-utils.js';
@@ -37,13 +37,13 @@ const pattern: RelativeReplacer = {
       }
     }
 
-    const inputMoment = moment(now).add(add, 'month');
+    let inputInstance = dayjs(now).hour(0).minute(0).second(0).add(add, 'month')
     if (japaneseRelativeDatesRegExp.test(inputStr)) {
       const relative = japaneseRelativeDates.getRelative(inputStr, now);
       if (!relative) {
         return null
       }
-      inputMoment.add(relative, 'days');
+      inputInstance = inputInstance.add(relative, 'days');
     } else if (dayRegExp.test(inputStr)) {
       const match = inputStr.match(dayRegExp);
       if (!match) {
@@ -57,11 +57,11 @@ const pattern: RelativeReplacer = {
       if (!day) {
         return null
       }
-      const resMoment = getDateFromNthDay(inputMoment.year(), inputMoment.month(), nth, day, now);
-      if (!resMoment) {
+      const res = getDateFromNthDay(inputInstance.year(), inputInstance.month(), nth, day);
+      if (!res) {
         return null
       }
-      inputMoment.date(resMoment.date());
+      inputInstance = inputInstance.date(res.date());
     } else {
       const dateMatch = inputStr.match(hinichiRegExp);
       if (!dateMatch) {
@@ -71,10 +71,10 @@ const pattern: RelativeReplacer = {
       if (!date) {
         return null
       }
-      inputMoment.date(date);
+      inputInstance = inputInstance.date(date);
     }
 
-    const diff = inputMoment.diff(now, 'days');
+    const diff = inputInstance.diff(now, 'days');
     return diff;
   }
 };

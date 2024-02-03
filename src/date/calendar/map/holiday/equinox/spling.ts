@@ -1,5 +1,5 @@
 import type { DateReplacer } from '../../../../../type.js'
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 // 春分の日
 const date: Record<number, number> = {
@@ -13,11 +13,11 @@ const date: Record<number, number> = {
 } as const;
 
 const replacer: [RegExp, DateReplacer] = [/(春分|しゅんぶん)の(日|ひ)/, (str, now = Date.now()) => {
-  const year = moment(now).year();
+  const year = dayjs(now).year();
   if (!date[year]) {
     return null;
   }
   const setDate = date[year];
-  return moment(now).set({ month: 2, date: setDate });
+  return dayjs(now).month(2).date(setDate).hour(0).minute(0).second(0);
 }];
 export default replacer

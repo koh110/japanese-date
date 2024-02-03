@@ -1,3 +1,4 @@
+import type { Dayjs } from 'dayjs'
 import { RelativeReplacer } from '../../type.js'
 import { convertRegExpToPattern } from '../../lib/jpdate-lib/index.js'
 import map from './map/index.js'
@@ -11,18 +12,17 @@ const pattern = `(${keyStrs.join('|')})`;
 const replacer: RelativeReplacer = {
   pattern: pattern,
   getRelative: (inputStr, now = Date.now()) => {
-    let inputMoment = null;
-    for (const elem of map.entries()) {
-      const regExp = elem[0];
+    let input: Dayjs | null = null;
+    for (const [regExp, replacer] of map.entries()) {
       if (regExp.test(inputStr)) {
-        inputMoment = elem[1](inputStr, now);
+        input = replacer(inputStr, now);
         break;
       }
     }
-    if (!inputMoment) {
+    if (!input) {
       return null;
     }
-    return inputMoment.diff(now, 'days');
+    return input.diff(now, 'days');
   }
 };
 export default replacer

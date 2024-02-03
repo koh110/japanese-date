@@ -1,5 +1,5 @@
 import type { RelativeReplacer } from '../type.js'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { convertNum } from '../lib/jpdate-util/index.js';
 import { kansuujiPattern } from '../lib/jpdate-lib/index.js';
 
@@ -26,9 +26,9 @@ export const replacer: RelativeReplacer[] = [{
     if (!year) {
       return null
     }
-    const nowMoment = moment(now);
-    const inputMoment = moment(now).year(year);
-    const diff = inputMoment.diff(nowMoment, 'years');
+    const nowInstance = dayjs(now);
+    const inputdayjs = dayjs(now).year(year);
+    const diff = inputdayjs.diff(nowInstance, 'years');
     return diff;
   }
 }, {
