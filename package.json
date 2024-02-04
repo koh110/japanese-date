@@ -17,8 +17,8 @@
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "test": "vitest run --config ./vitest.config.ts",
-    "test:util": "ava -v test/util",
-    "lint": "eslint ./"
+    "lint": "npx @biomejs/biome lint src",
+    "format": "npx @biomejs/biome format src --write"
   },
   "author": "koh110",
   "license": "MIT",
@@ -26,8 +26,7 @@
     "node": ">=6"
   },
   "devDependencies": {
-    "eslint": "^5.7.0",
-    "sinon": "^7.0.0",
+    "@biomejs/biome": "1.5.3",
     "typescript": "^5.3.3",
     "vitest": "^1.2.2"
   },

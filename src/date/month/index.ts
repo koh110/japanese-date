@@ -1,7 +1,7 @@
 // 今月/先月...のパターン
-import type { RelativeReplacer } from '../../type.js'
-import dayjs from 'dayjs'
-import { kansuujiPattern } from '../../lib/jpdate-lib/index.js'
+import type { RelativeReplacer } from '../../type.js';
+import dayjs from 'dayjs';
+import { kansuujiPattern } from '../../lib/jpdate-lib/index.js';
 import { convertNum } from '../../lib/jpdate-util/index.js';
 import { dayPattern, dayRegExp, getDayFromStr } from '../../lib/day-utils.js';
 import { getDateFromNthDay } from '../../lib/get-date-from-nth-day.js';
@@ -22,32 +22,36 @@ const pattern: RelativeReplacer = {
     let add = 0;
     if (monthMatch) {
       switch (monthMatch[0]) {
-      case '来月':
-      case 'らいげつ':
-        add = 1;
-        break;
-      case '再来月':
-      case 'さらいげつ':
-        add = 2;
-        break;
-      case '先月':
-      case 'せんげつ':
-        add = -1;
-        break;
+        case '来月':
+        case 'らいげつ':
+          add = 1;
+          break;
+        case '再来月':
+        case 'さらいげつ':
+          add = 2;
+          break;
+        case '先月':
+        case 'せんげつ':
+          add = -1;
+          break;
       }
     }
 
-    let inputInstance = dayjs(now).hour(0).minute(0).second(0).add(add, 'month')
+    let inputInstance = dayjs(now)
+      .hour(0)
+      .minute(0)
+      .second(0)
+      .add(add, 'month');
     if (japaneseRelativeDatesRegExp.test(inputStr)) {
       const relative = japaneseRelativeDates.getRelative(inputStr, now);
       if (!relative) {
-        return null
+        return null;
       }
       inputInstance = inputInstance.add(relative, 'days');
     } else if (dayRegExp.test(inputStr)) {
       const match = inputStr.match(dayRegExp);
       if (!match) {
-        return null
+        return null;
       }
       const nth = convertNum(match[3]);
       if (!nth) {
@@ -55,27 +59,32 @@ const pattern: RelativeReplacer = {
       }
       const day = getDayFromStr(inputStr);
       if (!day) {
-        return null
+        return null;
       }
-      const res = getDateFromNthDay(inputInstance.year(), inputInstance.month(), nth, day);
+      const res = getDateFromNthDay(
+        inputInstance.year(),
+        inputInstance.month(),
+        nth,
+        day,
+      );
       if (!res) {
-        return null
+        return null;
       }
       inputInstance = inputInstance.date(res.date());
     } else {
       const dateMatch = inputStr.match(hinichiRegExp);
       if (!dateMatch) {
-        return null
+        return null;
       }
       const date = convertNum(dateMatch[1]);
       if (!date) {
-        return null
+        return null;
       }
       inputInstance = inputInstance.date(date);
     }
 
     const diff = inputInstance.diff(now, 'days');
     return diff;
-  }
+  },
 };
 export default pattern;

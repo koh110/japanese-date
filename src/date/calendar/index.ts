@@ -1,7 +1,7 @@
-import type { Dayjs } from 'dayjs'
-import { RelativeReplacer } from '../../type.js'
-import { convertRegExpToPattern } from '../../lib/jpdate-lib/index.js'
-import map from './map/index.js'
+import type { Dayjs } from 'dayjs';
+import { RelativeReplacer } from '../../type.js';
+import { convertRegExpToPattern } from '../../lib/jpdate-lib/index.js';
+import map from './map/index.js';
 
 const keyStrs = [...map.keys()].map((regExp) => {
   return convertRegExpToPattern(regExp);
@@ -23,6 +23,6 @@ const replacer: RelativeReplacer = {
       return null;
     }
     return input.diff(now, 'days');
-  }
+  },
 };
-export default replacer
+export default replacer;

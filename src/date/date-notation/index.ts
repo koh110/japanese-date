@@ -1,8 +1,11 @@
-import type { RelativeReplacer } from '../../type.js'
-import dayjs from 'dayjs'
-import { kansuujiPattern } from '../../lib/jpdate-lib/index.js'
-import { convertNum } from '../../lib/jpdate-util/index.js'
-import { beforeAfterPattern, beforeAfterRegExp } from '../../lib/date-utils/index.js';
+import type { RelativeReplacer } from '../../type.js';
+import dayjs from 'dayjs';
+import { kansuujiPattern } from '../../lib/jpdate-lib/index.js';
+import { convertNum } from '../../lib/jpdate-util/index.js';
+import {
+  beforeAfterPattern,
+  beforeAfterRegExp,
+} from '../../lib/date-utils/index.js';
 
 // 日付表記
 
@@ -11,12 +14,12 @@ const replacer: RelativeReplacer = {
     `((${kansuujiPattern}|[0-9０-９]{4})(/|-|年))?`,
     `(${kansuujiPattern}|[0-9０-９]{1,2})(/|-|月)`,
     `(${kansuujiPattern}|[0-9０-９]{1,2})日?`,
-    `(の?${beforeAfterPattern})?`
+    `(の?${beforeAfterPattern})?`,
   ].join(''),
   getRelative: (inputStr, now = Date.now()) => {
     const match = inputStr.match(/((.+)(\/|-|年))?(.+)(\/|-|月)(.+)日?/);
     if (!match) {
-      return null
+      return null;
     }
     const nowInstance = dayjs(now).hour(0).minute(0).second(0);
     let convert = convertNum(match[2]);
@@ -32,7 +35,7 @@ const replacer: RelativeReplacer = {
       .date(date)
       .hour(0)
       .minute(0)
-      .second(0)
+      .second(0);
 
     // 何日前/後の指定がされていたら
     const beforeAfter = inputStr.match(beforeAfterRegExp);
@@ -42,13 +45,13 @@ const replacer: RelativeReplacer = {
         return null;
       }
       if (/(まえ|前)/.test(inputStr)) {
-        num = num * (-1);
+        num = num * -1;
       }
       inputInstance = inputInstance.add(num, 'days');
     }
 
     const diff = inputInstance.diff(nowInstance, 'days');
     return diff;
-  }
+  },
 };
-export default replacer
+export default replacer;

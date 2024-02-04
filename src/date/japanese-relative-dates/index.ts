@@ -1,31 +1,31 @@
-import type { RelativeReplacer } from '../../type.js'
-import { convertRegExpToPattern } from '../../lib/jpdate-lib/index.js'
+import type { RelativeReplacer } from '../../type.js';
+import { convertRegExpToPattern } from '../../lib/jpdate-lib/index.js';
 
 const dateRegExps: Record<string, { regexp: RegExp; relative: number }> = {
   today: {
     regexp: /今日|きょう/,
-    relative: 0
+    relative: 0,
   },
   tomorrow: {
     regexp: /明日|あした|あす|みょうじつ|翌日|よくじつ/,
-    relative: 1
+    relative: 1,
   },
   twoDaysAfterTomorrow: {
     regexp: /明々後日|しあさって/,
-    relative: 3
+    relative: 3,
   },
   dayAfterTomorrow: {
     regexp: /明後日|あさって/,
-    relative: 2
+    relative: 2,
   },
   dayBeforeYesterday: {
     regexp: /一昨日|おととい/,
-    relative: -2
+    relative: -2,
   },
   yesterday: {
     regexp: /昨日|きのう|さくじつ/,
-    relative: -1
-  }
+    relative: -1,
+  },
 } as const;
 
 // 判定順
@@ -35,12 +35,14 @@ const datePriority = [
   dateRegExps.twoDaysAfterTomorrow,
   dateRegExps.dayAfterTomorrow,
   dateRegExps.dayBeforeYesterday,
-  dateRegExps.yesterday
+  dateRegExps.yesterday,
 ] as const;
 
-const allPattern = datePriority.map((e) => {
-  return convertRegExpToPattern(e.regexp);
-}).join('|');
+const allPattern = datePriority
+  .map((e) => {
+    return convertRegExpToPattern(e.regexp);
+  })
+  .join('|');
 
 const replacer: RelativeReplacer = {
   pattern: allPattern,
@@ -50,7 +52,7 @@ const replacer: RelativeReplacer = {
         return date.relative;
       }
     }
-    return null
-  }
+    return null;
+  },
 };
-export default replacer
+export default replacer;

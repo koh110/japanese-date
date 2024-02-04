@@ -1,12 +1,17 @@
-import { test, expect } from 'vitest'
-import { zenToHan, convertNum, kansuujiRegExp, kanjiToArabic } from './index.js';
+import { test, expect } from 'vitest';
+import {
+  zenToHan,
+  convertNum,
+  kansuujiRegExp,
+  kanjiToArabic,
+} from './index.js';
 
 test.each([
   ['０', 0],
   ['１', 1],
   ['１３', 13],
   ['参〇弐', 302],
-  ['八千七百六十五万四千三百二十一', 87654321]
+  ['八千七百六十五万四千三百二十一', 87654321],
 ])('convertNum', (str, num) => {
   expect(convertNum(str)).toStrictEqual(num);
 });
@@ -14,22 +19,18 @@ test.each([
 test.each([
   ['０', '0'],
   ['１', '1'],
-  ['１３', '13']
+  ['１３', '13'],
 ])('zenToHan', (zenkaku, hankaku) => {
   expect(zenToHan(zenkaku)).toStrictEqual(hankaku);
 });
 
-test.each([
-  '十',
-  '百一',
-  '一',
-  '千',
-  '零',
-  '参〇弐'
-])('kansuujiRegExp', (elem) => {
-  const regExp = new RegExp(kansuujiRegExp);
-  expect(regExp.test(elem)).toStrictEqual(true);
-});
+test.each(['十', '百一', '一', '千', '零', '参〇弐'])(
+  'kansuujiRegExp',
+  (elem) => {
+    const regExp = new RegExp(kansuujiRegExp);
+    expect(regExp.test(elem)).toStrictEqual(true);
+  },
+);
 
 test.each([
   ['十', 10],
@@ -60,7 +61,7 @@ test.each([
   ['卅', 30],
   ['卌', 40],
   ['五十九', 59],
-  ['三百七十', 370]
+  ['三百七十', 370],
 ])('kanjiToArabic', (str, num) => {
   expect(kanjiToArabic(str)).toStrictEqual(num);
 });

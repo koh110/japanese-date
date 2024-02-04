@@ -5,4 +5,11 @@ import month from './month/index.js';
 import jpRelativeDates from './japanese-relative-dates/index.js';
 import week from './week/index.js';
 
-export const replacer = [calendar, dateNotation, beforeAfter, month, week, jpRelativeDates];
+export const replacer = [
+  calendar,
+  dateNotation,
+  beforeAfter,
+  month,
+  week,
+  jpRelativeDates,
+];

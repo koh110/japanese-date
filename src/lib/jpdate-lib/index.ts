@@ -1,4 +1,4 @@
-import type { RelativeReplacer } from '../../type.js'
+import type { RelativeReplacer } from '../../type.js';
 import { kansuujiRegExp } from '../jpdate-util/index.js';
 
 // 正規表現を前後の/を落とした文字列化する
@@ -13,14 +13,17 @@ export const convertRegExpToPattern = (regExp: RegExp) => {
 
 export const kansuujiPattern = convertRegExpToPattern(kansuujiRegExp);
 
-type CreateReplacerType = 'seconds' | 'days' | 'years'
-type ReplacerMap = Map<RegExp, RelativeReplacer & { type: CreateReplacerType }>
+type CreateReplacerType = 'seconds' | 'days' | 'years';
+type ReplacerMap = Map<RegExp, RelativeReplacer & { type: CreateReplacerType }>;
 type CreateReplacerResponse = {
-  patterns: string[]
-  map: ReplacerMap
-}
+  patterns: string[];
+  map: ReplacerMap;
+};
 
-export const createReplacer = (type: CreateReplacerType, replacerArray: RelativeReplacer[]): CreateReplacerResponse => {
+export const createReplacer = (
+  type: CreateReplacerType,
+  replacerArray: RelativeReplacer[],
+): CreateReplacerResponse => {
   const patternStrs = [];
   const replacementMap: CreateReplacerResponse['map'] = new Map();
   for (const elem of replacerArray) {
@@ -30,11 +33,13 @@ export const createReplacer = (type: CreateReplacerType, replacerArray: Relative
 
   return {
     patterns: patternStrs,
-    map: replacementMap
+    map: replacementMap,
   } as const;
 };
 
-export const addReplacer = (replacerArray: CreateReplacerResponse[]): { pattern: RegExp; map: ReplacerMap } => {
+export const addReplacer = (
+  replacerArray: CreateReplacerResponse[],
+): { pattern: RegExp; map: ReplacerMap } => {
   const addPatterns = [];
   const mapSeed = [];
   for (const replacer of replacerArray) {
@@ -45,18 +50,22 @@ export const addReplacer = (replacerArray: CreateReplacerResponse[]): { pattern:
   const map = new Map(mapSeed);
   return {
     pattern: pattern,
-    map: map
+    map: map,
   };
 };
 
 type PatternMatchResponse = {
-  index: number,
-  elem: string,
-  getRelative: RelativeReplacer['getRelative'],
-  type: CreateReplacerType
-}[]
+  index: number;
+  elem: string;
+  getRelative: RelativeReplacer['getRelative'];
+  type: CreateReplacerType;
+}[];
 
-export const patternMatch = (str = '', pattern: RegExp, map: ReturnType<typeof addReplacer>['map']): PatternMatchResponse => {
+export const patternMatch = (
+  str = '',
+  pattern: RegExp,
+  map: ReturnType<typeof addReplacer>['map'],
+): PatternMatchResponse => {
   let result;
   const results = [];
   while ((result = pattern.exec(str)) !== null) {
@@ -69,7 +78,7 @@ export const patternMatch = (str = '', pattern: RegExp, map: ReturnType<typeof a
           index: result.index,
           elem: result[0],
           getRelative: replace.getRelative,
-          type: replace.type
+          type: replace.type,
         });
         break;
       }

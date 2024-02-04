@@ -1,20 +1,23 @@
-import { test, expect } from 'vitest'
+import { test, expect } from 'vitest';
 
 import { createReplacer, addReplacer } from './index.js';
 
 test('createReplacer', () => {
   const type = 'test';
-  const replacerArray = [{
-    pattern: 'パターン1',
-    getRelative: (inputStr, now = Date.now()) => {
-      return 1;
-    }
-  }, {
-    pattern: 'パターン2',
-    getRelative: (inputStr, now = Date.now()) => {
-      return 2;
-    }
-  }];
+  const replacerArray = [
+    {
+      pattern: 'パターン1',
+      getRelative: (inputStr, now = Date.now()) => {
+        return 1;
+      },
+    },
+    {
+      pattern: 'パターン2',
+      getRelative: (inputStr, now = Date.now()) => {
+        return 2;
+      },
+    },
+  ];
   const replacer = createReplacer(type as any, replacerArray);
   expect(replacer.patterns.length).toStrictEqual(replacerArray.length);
   let i = 0;
@@ -30,29 +33,34 @@ test('createReplacer', () => {
 
 test('addReplacer', () => {
   const type1 = 'タイプ1';
-  const seed1 = [{
-    pattern: 'パターン1-1',
-    getRelative: (inputStr, now = Date.now()) => {
-      return 1;
-    }
-  }, {
-    pattern: 'パターン1-2',
-    getRelative: (inputStr, now = Date.now()) => {
-      return 2;
-    }
-  }];
+  const seed1 = [
+    {
+      pattern: 'パターン1-1',
+      getRelative: (inputStr, now = Date.now()) => {
+        return 1;
+      },
+    },
+    {
+      pattern: 'パターン1-2',
+      getRelative: (inputStr, now = Date.now()) => {
+        return 2;
+      },
+    },
+  ];
   const replacer1 = createReplacer(type1 as any, seed1);
-  const seed2 = [{
-    pattern: 'パターン2-1',
-    getRelative: (inputStr, now = Date.now()) => {
-      return 1;
-    }
-  }];
+  const seed2 = [
+    {
+      pattern: 'パターン2-1',
+      getRelative: (inputStr, now = Date.now()) => {
+        return 1;
+      },
+    },
+  ];
   const type2 = 'タイプ2';
   const replacer2 = createReplacer(type2 as any, seed2);
   const add = addReplacer([replacer1, replacer2]);
   let i = 0;
-  const mapArray = Array.from(add.map.entries())
+  const mapArray = Array.from(add.map.entries());
   for (const entry of mapArray) {
     expect(entry[0] instanceof RegExp).toStrictEqual(true);
     const replace = entry[1];

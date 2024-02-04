@@ -1,12 +1,20 @@
 import dayjs from 'dayjs';
-import { createReplacer, addReplacer, patternMatch } from './lib/jpdate-lib/index.js';
-import { replacer as _timeReplacer } from './time/index.js'
-import { replacer as _dateReplacer } from './date/index.js'
-import { replacer as _yearReplacer } from './year/index.js'
+import {
+  createReplacer,
+  addReplacer,
+  patternMatch,
+} from './lib/jpdate-lib/index.js';
+import { replacer as _timeReplacer } from './time/index.js';
+import { replacer as _dateReplacer } from './date/index.js';
+import { replacer as _yearReplacer } from './year/index.js';
 const timeReplacer = createReplacer('seconds', _timeReplacer);
 const dateReplacer = createReplacer('days', _dateReplacer);
 const yearReplacer = createReplacer('years', _yearReplacer);
-const { pattern, map } = addReplacer([timeReplacer, dateReplacer, yearReplacer]);
+const { pattern, map } = addReplacer([
+  timeReplacer,
+  dateReplacer,
+  yearReplacer,
+]);
 
 export const match = (str = '', now = Date.now()) => {
   const results = patternMatch(str, pattern, map);
@@ -15,25 +23,25 @@ export const match = (str = '', now = Date.now()) => {
       index: elem.index,
       elem: elem.elem,
       relative: elem.getRelative(elem.elem, now),
-      type: elem.type
+      type: elem.type,
     };
   });
   return res;
 };
 
-type PatternMatchResponse = ReturnType<typeof patternMatch>
+type PatternMatchResponse = ReturnType<typeof patternMatch>;
 
 export const getDate = (str = '', now = Date.now()) => {
   const results = patternMatch(str, pattern, map);
   const res: Date[] = [];
   const tmp: {
-    years: PatternMatchResponse[number] | null
-    days: PatternMatchResponse[number] | null
-    seconds: PatternMatchResponse[number] | null
+    years: PatternMatchResponse[number] | null;
+    days: PatternMatchResponse[number] | null;
+    seconds: PatternMatchResponse[number] | null;
   } = {
     years: null,
     days: null,
-    seconds: null
+    seconds: null,
   };
   const clearTmp = () => {
     tmp.years = null;
@@ -44,7 +52,10 @@ export const getDate = (str = '', now = Date.now()) => {
     let tmpNow = now;
     let date = dayjs(now).hour(0).minute(0).second(0);
     if (tmp.years) {
-      const relative = tmp.years.getRelative(tmp.years.elem, date.toDate().getTime());
+      const relative = tmp.years.getRelative(
+        tmp.years.elem,
+        date.toDate().getTime(),
+      );
       if (relative === null) {
         clearTmp();
         return;
@@ -53,7 +64,10 @@ export const getDate = (str = '', now = Date.now()) => {
       tmpNow = date.toDate().getTime();
     }
     if (tmp.days) {
-      const relative = tmp.days.getRelative(tmp.days.elem, date.toDate().getTime());
+      const relative = tmp.days.getRelative(
+        tmp.days.elem,
+        date.toDate().getTime(),
+      );
       if (relative === null) {
         clearTmp();
         return;
@@ -62,9 +76,15 @@ export const getDate = (str = '', now = Date.now()) => {
       tmpNow = date.toDate().getTime();
     }
     if (tmp.seconds) {
-      const _now = dayjs(now)
-      const _date = date.hour(_now.hour()).minute(_now.minute()).second(_now.second());
-      const relative = tmp.seconds.getRelative(tmp.seconds.elem, _date.toDate().getTime());
+      const _now = dayjs(now);
+      const _date = date
+        .hour(_now.hour())
+        .minute(_now.minute())
+        .second(_now.second());
+      const relative = tmp.seconds.getRelative(
+        tmp.seconds.elem,
+        _date.toDate().getTime(),
+      );
       if (relative === null) {
         clearTmp();
         return;

@@ -1,7 +1,10 @@
 // 何日前/後のパターン
 
-import type { RelativeReplacer } from '../../type.js'
-import { beforeAfterPattern, beforeAfterRegExp } from '../../lib/date-utils/index.js';
+import type { RelativeReplacer } from '../../type.js';
+import {
+  beforeAfterPattern,
+  beforeAfterRegExp,
+} from '../../lib/date-utils/index.js';
 import { convertNum } from '../../lib/jpdate-util/index.js';
 
 const replacer: RelativeReplacer = {
@@ -16,9 +19,9 @@ const replacer: RelativeReplacer = {
       return null;
     }
     if (/(まえ|前)/.test(inputStr)) {
-      return num * (-1);
+      return num * -1;
     }
     return num;
-  }
+  },
 };
-export default replacer
+export default replacer;

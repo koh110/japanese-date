@@ -11,7 +11,7 @@ export const dayRegExp = new RegExp(dayPattern);
 export const getDayFromStr = (str: string): number | null => {
   const match = str.match(dayRegExp);
   if (!match) {
-    return null
+    return null;
   }
   const matchDay = week.indexOf(match[4]);
   return matchDay;
