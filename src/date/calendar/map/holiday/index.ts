@@ -1,9 +1,9 @@
-import type { DateReplacer } from '../../../../type.js';
 import dayjs from 'dayjs';
 import { getDateFromNthDay } from '../../../../lib/get-date-from-nth-day.js';
+import type { DateReplacer } from '../../../../type.js';
 import {
-  spling as equinoxSpling,
   autumnal as equinoxAutumnal,
+  spling as equinoxSpling,
 } from './equinox/index.js';
 
 const week = {
@@ -62,7 +62,8 @@ const holidayMap = new Map<RegExp, DateReplacer>([
       const nowInstance = dayjs(now);
       if (nowInstance.year() < 1989) {
         return null;
-      } else if (nowInstance.year() < 2007) {
+      }
+      if (nowInstance.year() < 2007) {
         // 2006年までは4/29
         return nowInstance.month(3).date(29);
       }
@@ -94,7 +95,8 @@ const holidayMap = new Map<RegExp, DateReplacer>([
       const nowInstance = dayjs(now);
       if (nowInstance.year() < 1996) {
         return null;
-      } else if (nowInstance.year() < 2003) {
+      }
+      if (nowInstance.year() < 2003) {
         // 2002年までは7/20
         return nowInstance.month(6).date(20).hour(0).minute(0).second(0);
       }
@@ -120,7 +122,8 @@ const holidayMap = new Map<RegExp, DateReplacer>([
       const nowInstance = dayjs(now);
       if (nowInstance.year() < 1966) {
         return null;
-      } else if (nowInstance.year() < 2003) {
+      }
+      if (nowInstance.year() < 2003) {
         // 2003年までは9/15
         return nowInstance.month(8).date(15).hour(0).minute(0).second(0);
       }
@@ -135,7 +138,8 @@ const holidayMap = new Map<RegExp, DateReplacer>([
       const nowInstance = dayjs(now);
       if (nowInstance.year() < 1966) {
         return null;
-      } else if (nowInstance.year() < 2000) {
+      }
+      if (nowInstance.year() < 2000) {
         // 1999年までは10/10
         return nowInstance.month(9).date(10).hour(0).minute(0).second(0);
       }

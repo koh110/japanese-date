@@ -1,5 +1,5 @@
-import type { RelativeReplacer } from '../../type.js';
 import { dayPattern, getDayFromStr } from '../../lib/day-utils.js';
+import type { RelativeReplacer } from '../../type.js';
 
 const pattern: RelativeReplacer = {
   pattern: `((再?来週|先週|今週|さ?らいしゅう|せんしゅう|こんしゅう)の?)?${dayPattern}`,

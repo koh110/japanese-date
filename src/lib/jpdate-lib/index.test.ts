@@ -1,6 +1,6 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { createReplacer, addReplacer } from './index.js';
+import { addReplacer, createReplacer } from './index.js';
 
 test('createReplacer', () => {
   const type = 'test';
@@ -18,6 +18,7 @@ test('createReplacer', () => {
       },
     },
   ];
+  // biome-ignore lint/suspicious/noExplicitAny: in test
   const replacer = createReplacer(type as any, replacerArray);
   expect(replacer.patterns.length).toStrictEqual(replacerArray.length);
   let i = 0;
@@ -47,7 +48,8 @@ test('addReplacer', () => {
       },
     },
   ];
-  const replacer1 = createReplacer(type1 as any, seed1);
+  // biome-ignore lint/suspicious/noExplicitAny: in test
+  const  replacer1 = createReplacer(type1 as any, seed1);
   const seed2 = [
     {
       pattern: 'パターン2-1',
@@ -57,6 +59,7 @@ test('addReplacer', () => {
     },
   ];
   const type2 = 'タイプ2';
+  // biome-ignore lint/suspicious/noExplicitAny: in test
   const replacer2 = createReplacer(type2 as any, seed2);
   const add = addReplacer([replacer1, replacer2]);
   let i = 0;

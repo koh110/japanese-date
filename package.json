@@ -17,8 +17,8 @@
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "test": "vitest run --config ./vitest.config.ts",
-    "lint": "npx @biomejs/biome lint src",
-    "format": "npx @biomejs/biome format src --write"
+    "lint": "biome lint src",
+    "format": "biome check  --apply src"
   },
   "author": "koh110",
   "license": "MIT",

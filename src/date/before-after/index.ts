@@ -1,11 +1,11 @@
 // 何日前/後のパターン
 
-import type { RelativeReplacer } from '../../type.js';
 import {
   beforeAfterPattern,
   beforeAfterRegExp,
 } from '../../lib/date-utils/index.js';
 import { convertNum } from '../../lib/jpdate-util/index.js';
+import type { RelativeReplacer } from '../../type.js';
 
 const replacer: RelativeReplacer = {
   pattern: `${beforeAfterPattern}`,

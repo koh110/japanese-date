@@ -1,11 +1,11 @@
-import type { RelativeReplacer } from '../type.js';
 import dayjs from 'dayjs';
-import { convertNum } from '../lib/jpdate-util/index.js';
-import { kansuujiPattern } from '../lib/jpdate-lib/index.js';
 import {
   beforeAfterPattern,
   beforeAfterRegExp,
 } from '../lib/date-utils/index.js';
+import { kansuujiPattern } from '../lib/jpdate-lib/index.js';
+import { convertNum } from '../lib/jpdate-util/index.js';
+import type { RelativeReplacer } from '../type.js';
 
 export const replacer: RelativeReplacer[] = [
   {

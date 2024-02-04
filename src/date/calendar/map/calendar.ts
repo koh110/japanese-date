@@ -1,5 +1,5 @@
-import type { DateReplacer } from '../../../type.js';
 import dayjs from 'dayjs';
+import type { DateReplacer } from '../../../type.js';
 
 const calendarMap = new Map<RegExp, DateReplacer>([
   [

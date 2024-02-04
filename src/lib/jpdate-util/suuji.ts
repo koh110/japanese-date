@@ -48,29 +48,29 @@ const suujiMap = new Map([
 ]);
 const suujiMapRegExp = new RegExp(`(${[...suujiMap.keys()].join('|')})`, 'g');
 const lowKetaMap = new Map([
-  ['十', Math.pow(10, 1)],
-  ['百', Math.pow(10, 2)],
-  ['千', Math.pow(10, 3)],
+  ['十', 10 ** 1],
+  ['百', 10 ** 2],
+  ['千', 10 ** 3],
 ]);
 const highKetaMap = new Map([
-  ['万', Math.pow(10, 4)],
-  ['億', Math.pow(10, 8)],
-  ['兆', Math.pow(10, 12)],
-  ['京', Math.pow(10, 16)],
-  ['垓', Math.pow(10, 20)],
-  ['秭', Math.pow(10, 24)],
-  ['𥝱', Math.pow(10, 24)],
-  ['穰', Math.pow(10, 28)],
-  ['溝', Math.pow(10, 32)],
-  ['澗', Math.pow(10, 36)],
-  ['正', Math.pow(10, 40)],
-  ['載', Math.pow(10, 44)],
-  ['極', Math.pow(10, 48)],
-  ['恒河沙', Math.pow(10, 52)],
-  ['阿僧祇', Math.pow(10, 56)],
-  ['那由他', Math.pow(10, 60)],
-  ['不可思議', Math.pow(10, 64)],
-  ['無量大数', Math.pow(10, 68)],
+  ['万', 10 ** 4],
+  ['億', 10 ** 8],
+  ['兆', 10 ** 12],
+  ['京', 10 ** 16],
+  ['垓', 10 ** 20],
+  ['秭', 10 ** 24],
+  ['𥝱', 10 ** 24],
+  ['穰', 10 ** 28],
+  ['溝', 10 ** 32],
+  ['澗', 10 ** 36],
+  ['正', 10 ** 40],
+  ['載', 10 ** 44],
+  ['極', 10 ** 48],
+  ['恒河沙', 10 ** 52],
+  ['阿僧祇', 10 ** 56],
+  ['那由他', 10 ** 60],
+  ['不可思議', 10 ** 64],
+  ['無量大数', 10 ** 68],
 ]);
 const highKetaRegExp = new RegExp(
   `(${[...highKetaMap.keys()].join('|')})`,
@@ -125,8 +125,9 @@ export const kanjiToArabic = (str: string) => {
       return `${suujiMap.get(match)}`;
     });
 
-  let result;
+  let result: RegExpExecArray | null = null;
   let total = 0;
+  // biome-ignore lint/suspicious/noAssignInExpressions:
   while ((result = highKetaRegExp.exec(res)) !== null) {
     const unit = res.slice(0, result.index);
     const highKeta = highKetaMap.get(result[0]);
@@ -149,8 +150,8 @@ export const convertNum = (str: string | null) => {
   if (kansuujiRegExp.test(str)) {
     num = kanjiToArabic(str);
   } else {
-    str = zenToHan(str);
-    const parse = str.match(/[0-9]+/);
+    const hanStr = zenToHan(str);
+    const parse = hanStr.match(/[0-9]+/);
     if (!parse) {
       return null;
     }

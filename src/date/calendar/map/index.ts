@@ -1,5 +1,3 @@
-'use strict';
-
 import calendar from './calendar.js';
 import holiday from './holiday/index.js';
 

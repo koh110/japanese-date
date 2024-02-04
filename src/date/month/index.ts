@@ -1,10 +1,10 @@
-// 今月/先月...のパターン
-import type { RelativeReplacer } from '../../type.js';
 import dayjs from 'dayjs';
-import { kansuujiPattern } from '../../lib/jpdate-lib/index.js';
-import { convertNum } from '../../lib/jpdate-util/index.js';
 import { dayPattern, dayRegExp, getDayFromStr } from '../../lib/day-utils.js';
 import { getDateFromNthDay } from '../../lib/get-date-from-nth-day.js';
+import { kansuujiPattern } from '../../lib/jpdate-lib/index.js';
+import { convertNum } from '../../lib/jpdate-util/index.js';
+// 今月/先月...のパターン
+import type { RelativeReplacer } from '../../type.js';
 import japaneseRelativeDates from '../japanese-relative-dates/index.js';
 
 const monthPattern = '(再?来月|先月|今月|こんげつ|さ?らいげつ|せんげつ)';

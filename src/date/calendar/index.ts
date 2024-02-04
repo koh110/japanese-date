@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
-import { RelativeReplacer } from '../../type.js';
 import { convertRegExpToPattern } from '../../lib/jpdate-lib/index.js';
+import { RelativeReplacer } from '../../type.js';
 import map from './map/index.js';
 
 const keyStrs = [...map.keys()].map((regExp) => {

@@ -1,5 +1,5 @@
-import type { DateReplacer } from '../../../../../type.js';
 import dayjs from 'dayjs';
+import type { DateReplacer } from '../../../../../type.js';
 
 // 春分の日
 const date: Record<number, number> = {

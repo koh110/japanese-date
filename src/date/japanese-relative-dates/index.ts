@@ -1,5 +1,5 @@
-import type { RelativeReplacer } from '../../type.js';
 import { convertRegExpToPattern } from '../../lib/jpdate-lib/index.js';
+import type { RelativeReplacer } from '../../type.js';
 
 const dateRegExps: Record<string, { regexp: RegExp; relative: number }> = {
   today: {

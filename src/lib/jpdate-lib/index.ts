@@ -62,12 +62,13 @@ type PatternMatchResponse = {
 }[];
 
 export const patternMatch = (
-  str = '',
+  str: string,
   pattern: RegExp,
   map: ReturnType<typeof addReplacer>['map'],
 ): PatternMatchResponse => {
-  let result;
+  let result: RegExpExecArray | null = null;
   const results = [];
+  // biome-ignore lint/suspicious/noAssignInExpressions:
   while ((result = pattern.exec(str)) !== null) {
     const matchStr = result[0];
     for (const entry of map.entries()) {

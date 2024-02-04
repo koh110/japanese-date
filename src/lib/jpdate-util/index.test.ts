@@ -1,9 +1,9 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 import {
-  zenToHan,
   convertNum,
-  kansuujiRegExp,
   kanjiToArabic,
+  kansuujiRegExp,
+  zenToHan,
 } from './index.js';
 
 test.each([
@@ -51,7 +51,7 @@ test.each([
   ['八千柒百六十五万四千三百二十一', 87654321],
   ['壱億二千三百四十五萬六千七百捌十九', 123456789],
   ['玖億千二百三十四万八千七百拾五', 912348715],
-  ['七不可思議十二', Math.pow(10, 64) * 7 + 12],
+  ['七不可思議十二', (10 ** 64) * 7 + 12],
   ['壹〇二', 102],
   ['二〇', 20],
   ['四三〇弌弐', 43012],

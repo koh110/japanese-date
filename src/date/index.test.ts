@@ -1,8 +1,8 @@
-import { test, expect, vi, beforeEach, afterEach } from 'vitest';
 import dayjs from 'dayjs';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import {
-  createReplacer,
   addReplacer,
+  createReplacer,
   patternMatch,
 } from '../lib/jpdate-lib/index.js';
 import { replacer } from './index.js';

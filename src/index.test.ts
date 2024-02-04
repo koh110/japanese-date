@@ -1,5 +1,5 @@
-import { test, expect, vi, beforeEach, afterEach } from 'vitest';
 import dayjs from 'dayjs';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import * as jpdate from './index.js';
 
 beforeEach(() => {
@@ -104,7 +104,7 @@ test('match', () => {
   const dates = jpdate.match(inputStr, Date.now());
   for (const entry of dates.entries()) {
     const date = entry[1];
-    expect(date.hasOwnProperty('index')).toStrictEqual(true);
+    expect(Object.prototype.hasOwnProperty.call(date, 'index')).toStrictEqual(true);
     expect(date).toMatchObject(arr[entry[0]]);
   }
   // '入力パターン数と一致している'
