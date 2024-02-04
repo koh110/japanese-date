@@ -1,6 +1,7 @@
 # japanese-date
 
 [japanese-date](https://www.npmjs.com/package/japanese-date)
+
 [![npm version](https://badge.fury.io/js/japanese-date.svg)](https://badge.fury.io/js/japanese-date)
 
 日本語からDateオブジェクトを取得するparser
